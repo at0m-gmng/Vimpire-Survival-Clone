@@ -1,15 +1,15 @@
 namespace GameResources.Scripts.MovementSystem
 {
-    using Configs.Entities;
+    using Data.Entities;
     using UnityEngine;
 
     public class EnemyMovementController : AbstractMovementController
     {
-        public EnemyMovementController(Transform transform, Transform targetPlayer, EnemyConfig enemyConfig)
+        public EnemyMovementController(Transform transform, Transform targetPlayer, EnemyConfig enemiesConfig)
         {
             _transform = transform;
             _target = targetPlayer;
-            _moveSpeed = enemyConfig.MoveSpeed;
+            _moveSpeed = enemiesConfig.MoveSpeed;
         }
         private readonly Transform _transform;
         private readonly Transform _target;

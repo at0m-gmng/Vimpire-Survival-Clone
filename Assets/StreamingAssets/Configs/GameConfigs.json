@@ -1,0 +1,27 @@
+{
+  "PlayerConfig": {
+    "Health": 10.0,
+    "MoveSpeed": 5.0,
+    "AttackRange": 7.5,
+    "AttackDamage": 5,
+    "AttackCooldown": 1.5
+  },
+  "EnemiesConfig": {
+    "EnemiesDescription": [
+      {
+        "EntityType": "EnemyFast",
+        "EnemyConfig": {
+          "MoveSpeed": 8.0,
+          "Health": 5.0
+        }
+      },
+      {
+        "EntityType": "EnemySlow",
+        "EnemyConfig": {
+          "MoveSpeed": 4.0,
+          "Health": 10.0
+        }
+      }
+    ]
+  }
+}

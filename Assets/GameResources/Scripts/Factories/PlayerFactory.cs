@@ -1,6 +1,6 @@
 ﻿namespace GameResources.Scripts.Factories
 {
-    using Configs.Entities;
+    using Data.Entities;
     using Facades;
     using UnityEngine;
     using Zenject;

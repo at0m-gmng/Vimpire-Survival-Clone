@@ -1,5 +1,6 @@
 namespace GameResources.Scripts.Signals
 {
+    using Data;
     using Facades;
 
     public class EntityKilledSignal

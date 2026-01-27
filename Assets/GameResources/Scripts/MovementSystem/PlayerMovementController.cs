@@ -1,7 +1,7 @@
 namespace GameResources.Scripts.MovementSystem
 {
     using System;
-    using Configs.Entities;
+    using Data.Entities;
     using InputSystem;
     using UniRx;
     using UnityEngine;

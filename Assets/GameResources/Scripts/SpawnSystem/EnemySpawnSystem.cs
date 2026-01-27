@@ -2,8 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Configs.Entities;
-    using Facades;
+    using Data.Entities;
     using Factories;
     using Signals;
     using UniRx;
@@ -13,18 +12,7 @@
 
     public class EnemySpawnSystem : IDisposable
     {
-        private readonly SignalBus _signalBus;
-        private readonly EnemyFactory _enemyFactory;
-    
-        private Transform _playerTarget;
-        private int _currentEnemyCount = 0;
-        private int _maxEnemies;
-        private float _spawnInterval;
-        private List<Vector3> _spawnPoints;
-        private EnemyConfig _enemyConfig;
-        private IDisposable _spawnTimer;
-
-        public EnemySpawnSystem(SignalBus signalBus, EnemyFactory enemyFactory)
+        public EnemySpawnSystem(SignalBus signalBus, IFactoryManager enemyFactory)
         {
             _enemyFactory = enemyFactory;
             _signalBus = signalBus;
@@ -32,11 +20,23 @@
             _signalBus.Subscribe<PlayerCreatedSignal>(OnPlayerCreated);
             _signalBus.Subscribe<EntityKilledSignal>(OnEntityKilled);
         }
+        private readonly SignalBus _signalBus;
+        private readonly IFactoryManager _enemyFactory;
 
-        public void StartSystem(List<Vector3> spawnPoints, EnemyConfig enemyConfig, int maxEnemies, float interval)
+        private const string ENEMY_ENTITY = "Enemy";
+        
+        private Transform _playerTarget;
+        private int _currentEnemyCount = 0;
+        private int _maxEnemies;
+        private float _spawnInterval;
+        private List<Vector3> _spawnPoints;
+        private EnemiesConfig _enemiesConfig;
+        private IDisposable _spawnTimer;
+        
+        public void StartSystem(List<Vector3> spawnPoints, EnemiesConfig enemiesConfig, int maxEnemies, float interval)
         {
             _spawnPoints = spawnPoints;
-            _enemyConfig = enemyConfig;
+            _enemiesConfig = enemiesConfig;
             _spawnInterval = interval;
             _maxEnemies = maxEnemies;        
             StartSpawning();
@@ -46,7 +46,7 @@
 
         private void OnEntityKilled(EntityKilledSignal signal)
         {
-            if (signal.EntityType == EntityType.Enemy && _currentEnemyCount > 0)
+            if (signal.EntityType.ToString().Contains(ENEMY_ENTITY) && _currentEnemyCount > 0)
             {
                 _currentEnemyCount--;
                 // TrySpawnEnemy();
@@ -66,12 +66,13 @@
             if (_currentEnemyCount < _maxEnemies && _playerTarget != null && _spawnPoints.Count != 0)
             {
                 Vector3 randomSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
-
-                _enemyFactory.Create(new EnemySpawnData
+                EnemyDescription enemyDescription = _enemiesConfig.EnemiesDescription[Random.Range(0, _enemiesConfig.EnemiesDescription.Count)];
+                
+                _enemyFactory.GetFactory(enemyDescription.EntityType).Create(new EnemySpawnData
                 (
                     randomSpawnPoint,
                     _playerTarget,
-                    _enemyConfig
+                    enemyDescription
                 ));
 
                 _currentEnemyCount++;

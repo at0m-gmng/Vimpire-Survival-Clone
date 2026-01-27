@@ -2,7 +2,7 @@ namespace GameResources.Scripts.Facades
 {
     using System;
     using AttackSystem;
-    using Configs.Entities;
+    using Data.Entities;
     using Factories;
     using InputSystem;
     using MovementSystem;

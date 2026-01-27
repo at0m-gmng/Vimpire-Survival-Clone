@@ -1,7 +1,7 @@
 namespace GameResources.Scripts.Facades
 {
     using System;
-    using Configs.Entities;
+    using Data.Entities;
     using Factories;
     using HealthSystem;
     using MovementSystem;
@@ -46,7 +46,8 @@ namespace GameResources.Scripts.Facades
         {
             _pool = pool;
             transform.position = enemySpawnData.TargetPosition + _offset;
-            _config = enemySpawnData.EnemyConfig;
+            EntityType = enemySpawnData.EnemiesDescription.EntityType;
+            _config = enemySpawnData.EnemiesDescription.EnemyConfig;
             _targetPlayer = enemySpawnData.TargetPlayer;
             _damageableComponent.Initialize(_config);
             

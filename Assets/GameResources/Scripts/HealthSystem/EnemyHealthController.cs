@@ -1,7 +1,8 @@
 namespace GameResources.Scripts.HealthSystem
 {
     using System;
-    using Configs.Entities;using UnityEngine;
+    using Data.Entities;
+    using UnityEngine;
 
     public sealed class EnemyHealthController : MonoBehaviour, IDamageable
     {
@@ -42,7 +43,9 @@ namespace GameResources.Scripts.HealthSystem
             _config = config;
             Reset();
         }
-        
+
+        public void Initialize(EnemiesConfig config) => throw new NotImplementedException();
+
         public void TakeDamage(int damage) => Health -= damage;
 
         public void Reset()

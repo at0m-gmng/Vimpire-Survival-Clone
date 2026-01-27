@@ -1,6 +1,6 @@
 ﻿namespace GameResources.Scripts.SpawnSystem
 {
-    using Configs.Entities;
+    using Data.Entities;
     using Facades;
     using Factories;
     using Signals;

@@ -1,6 +1,7 @@
 ﻿namespace GameResources.Scripts.Factories
 {
-    using Configs.Entities;
+    using Data;
+    using Data.Entities;
     using Facades;
     using UnityEngine;
     using Zenject;
@@ -12,15 +13,15 @@
 
     public class EnemySpawnData
     {
-        public EnemySpawnData(Vector3 targetPosition, Transform targetPlayer, EnemyConfig enemyConfig)
+        public EnemySpawnData(Vector3 targetPosition, Transform targetPlayer, EnemyDescription enemiesDescription)
         {
             TargetPosition = targetPosition;
             TargetPlayer = targetPlayer;
-            EnemyConfig = enemyConfig;
+            EnemiesDescription = enemiesDescription;
         }
 
         public readonly Vector3 TargetPosition;
         public readonly Transform TargetPlayer;
-        public readonly EnemyConfig EnemyConfig;
+        public readonly EnemyDescription EnemiesDescription;
     }
 }

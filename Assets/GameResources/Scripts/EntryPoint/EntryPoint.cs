@@ -31,14 +31,14 @@
 
         private async void Start()
         {
-            if (_saveLoadSystem.TryLoadData(out GameConfigs gameConfigs))
+            if (_saveLoadSystem.TryLoadData<GameConfigs>(out GameConfigs gameConfigs, "GameConfigs.json"))
             {
                 _gameConfigs = gameConfigs;
             }
             
             _playerSpawnSystem.StartSystem(transform, _gameConfigs.PlayerConfig);
             await UniTask.Delay(100);
-            _enemySpawnSystem.StartSystem(GetTopFaceVertices(20), _gameConfigs.EnemyConfig, 20, 0.15f);
+            _enemySpawnSystem.StartSystem(GetTopFaceVertices(20), _gameConfigs.EnemiesConfig, 20, 0.15f);
         }
         
         private List<Vector3> GetTopFaceVertices(int pointsPerAxis)

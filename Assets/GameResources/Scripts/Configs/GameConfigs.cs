@@ -1,16 +1,18 @@
 ﻿namespace GameResources.Scripts.Configs
 {
-    using Entities;
+    using System;
+    using Data.Entities;
 
+    [Serializable]
     public class GameConfigs
     {
         public GameConfigs()
         {
             PlayerConfig = new PlayerConfig();
-            EnemyConfig = new EnemyConfig();
+            EnemiesConfig = new EnemiesConfig();
         }
         
         public PlayerConfig PlayerConfig;
-        public EnemyConfig EnemyConfig;
+        public EnemiesConfig EnemiesConfig;
     }
 }

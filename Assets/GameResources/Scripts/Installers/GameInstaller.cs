@@ -10,6 +10,7 @@ namespace GameResources.Scripts.Installers
     using SpawnSystem;
     using UnityEngine;
     using Zenject;
+    using EnemyFactory = Factories.EnemyFactory;
 
     public sealed class GameInstaller : MonoInstaller
     {
@@ -37,6 +38,7 @@ namespace GameResources.Scripts.Installers
         {
             Container.BindInstance(_inputConfig).AsSingle().IfNotBound();
             Container.BindInstance(_cameraConfig).AsSingle().IfNotBound();
+            Container.BindInstance(_enemyPrefabsConfig).AsSingle().IfNotBound();
         }
 
         private void BindSignals()
@@ -53,15 +55,21 @@ namespace GameResources.Scripts.Installers
 
         private void BindFactories()
         {
+            Container.BindInterfacesTo<EnemyFactoryManager>().AsSingle();
+            
             Container.BindFactory<PlayerSpawnData, PlayerFacade, PlayerFactory>()
                 .FromMonoPoolableMemoryPool(x => x.WithInitialSize(1)
-                    .FromComponentInNewPrefab(_playerPrefabsConfig.PlayerFacade)
-                    .UnderTransform(_playerPool));
-            
-            Container.BindFactory<EnemySpawnData, EnemyFacade, EnemyFactory>()
-                .FromMonoPoolableMemoryPool(x => x.WithInitialSize(20)
-                    .FromComponentInNewPrefab(_enemyPrefabsConfig.EnemyFacade)
+                .FromComponentInNewPrefab(_playerPrefabsConfig.PlayerFacade)
+                .UnderTransform(_playerPool));
+
+            for (int i = 0; i < _enemyPrefabsConfig.EnemyPrefabs.Count; i++)
+            {
+                Container.BindFactory<EnemySpawnData, EnemyFacade, EnemyFactory>()
+                    .WithId(_enemyPrefabsConfig.EnemyPrefabs[i].EntityType.ToString())
+                    .FromMonoPoolableMemoryPool(x => x.WithInitialSize(10)
+                    .FromComponentInNewPrefab(_enemyPrefabsConfig.EnemyPrefabs[i].EnemyFacade)
                     .UnderTransform(_enemiesPool));
+            }
         }
 
         private void BindSystems()

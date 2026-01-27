@@ -124,7 +124,6 @@ namespace Zenject
         }
     }
 
-    // Three parameters
     public class MonoPoolableMemoryPool<TParam1, TParam2, TParam3, TValue>
         : MemoryPool<TParam1, TParam2, TParam3, TValue>
         where TValue : Component, IPoolable<TParam1, TParam2, TParam3>

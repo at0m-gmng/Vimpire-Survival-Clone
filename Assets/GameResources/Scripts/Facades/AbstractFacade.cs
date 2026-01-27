@@ -1,17 +1,30 @@
 namespace GameResources.Scripts.Facades
 {
     using AttackSystem;
-    using Configs.Entities;
+    using Data;
+    using Data.Entities;
     using ExperienceSystem;
     using LevelSystem;
     using MovementSystem;
     using UnityEngine;
     using Zenject;
 
-    public abstract class AbstractFacade<T>: MonoBehaviour
-        where T : EntityConfig
+    public abstract class AbstractFacade<T>: MonoBehaviour where T : EntityConfig
     {
+        [Inject]
+        private void Construct(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
+        protected SignalBus _signalBus;
+        
         public Transform EntityTransform => _entityGameObject.transform;
+        
+        public EntityType EntityType
+        {
+            get => _entityType;
+            protected set => _entityType = value;
+        }
         
         [SerializeField] protected EntityType _entityType;
         [SerializeField] protected GameObject _entityGameObject;
@@ -20,17 +33,7 @@ namespace GameResources.Scripts.Facades
         protected AbstractAttackController _attackController;
         protected AbstractExperienceController _experienceController;
         protected AbstractLevelController _levelController;
-    
-        protected SignalBus _signalBus;
         protected T _config;
-
-        public EntityType EntityType => _entityType;
-
-        [Inject]
-        private void Construct(SignalBus signalBus)
-        {
-            _signalBus = signalBus;
-        }
 
         protected virtual void OnDestroy()
         {

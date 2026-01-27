@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b216bbe02b9f46a79ae52eb5c585baaa, type: 3}
   m_Name: EnemyPrefabsConfig
   m_EditorClassIdentifier: 
-  <EnemyFacade>k__BackingField: {fileID: 2167898593724468931, guid: 02678488fe25dda4081b3475e8d1ec97, type: 3}
+  <EnemyPrefabs>k__BackingField:
+  - EntityType: 100
+    EnemyFacade: {fileID: 2167898593724468931, guid: 02678488fe25dda4081b3475e8d1ec97, type: 3}
+  - EntityType: 101
+    EnemyFacade: {fileID: 2167898593724468931, guid: f7beff599fd82d745a82827abd27640c, type: 3}
