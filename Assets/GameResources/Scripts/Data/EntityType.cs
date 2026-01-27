@@ -5,6 +5,6 @@ namespace GameResources.Scripts.Data
         Player = 0,
         EnemyFast = 100,
         EnemySlow = 101,
-        Experience = 1000
+        CollectableSmallExperience = 1000
     }
 }

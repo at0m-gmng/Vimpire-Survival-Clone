@@ -1,6 +1,7 @@
 namespace GameResources.Scripts.Signals
 {
     using Configs;
+    using Data;
 
     public class GameConfigLoadSignal
     {

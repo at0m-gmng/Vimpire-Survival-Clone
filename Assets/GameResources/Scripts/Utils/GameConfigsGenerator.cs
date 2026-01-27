@@ -6,10 +6,8 @@ namespace GameResources.Scripts.Utils
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Configs;
     using Data;
     using Data.Entities;
-    using Facades;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using UnityEngine;
@@ -23,28 +21,11 @@ namespace GameResources.Scripts.Utils
         [MenuItem(MENU_PATH)]
         public static void Generate()
         {
-            GameConfigs configs = new GameConfigs();
-        
-            List<EntityType> enemyTypes = Enum.GetValues(typeof(EntityType))
-                .Cast<EntityType>()
-                .Where(et => et.ToString().ToLower().Contains("enemy"))
-                .ToList();
-        
-            foreach (EntityType enemyType in enemyTypes)
-            {
-                configs.EnemiesConfig.EnemiesDescription.Add(new EnemyDescription
-                {
-                    EntityType = enemyType,
-                    EnemyConfig = new EnemyConfig()
-                });
-            }
+            JsonSerializerSettings settings = GetSerializerSettings();
+            GameConfigs configs = LoadOrCreateConfigs(settings);
             
-            JsonSerializerSettings settings = new JsonSerializerSettings
-            {
-                Converters = new List<JsonConverter> { new StringEnumConverter() },
-                Formatting = Formatting.Indented
-            };
-        
+            configs = UpdateConfigsStructure(configs, settings);
+            
             string json = JsonConvert.SerializeObject(configs, Formatting.Indented, settings);
             
             string folderPath = Path.Combine(Application.streamingAssetsPath, FOLDER_NAME);
@@ -55,6 +36,129 @@ namespace GameResources.Scripts.Utils
             File.WriteAllText(filePath, json);
             
             AssetDatabase.Refresh();
+        }
+
+        private static JsonSerializerSettings GetSerializerSettings()
+        {
+            return new JsonSerializerSettings
+            {
+                Converters = new List<JsonConverter> { new StringEnumConverter() },
+                Formatting = Formatting.Indented
+            };
+        }
+
+        private static GameConfigs LoadOrCreateConfigs(JsonSerializerSettings settings)
+        {
+            string folderPath = Path.Combine(Application.streamingAssetsPath, FOLDER_NAME);
+            string filePath = Path.Combine(folderPath, FILE_NAME);
+            
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    string json = File.ReadAllText(filePath);
+                    return JsonConvert.DeserializeObject<GameConfigs>(json, settings) ?? new GameConfigs();
+                }
+                catch
+                {
+                    return new GameConfigs();
+                }
+            }
+            
+            return new GameConfigs();
+        }
+
+        private static GameConfigs UpdateConfigsStructure(GameConfigs configs, JsonSerializerSettings settings)
+        {
+            if (configs == null)
+                configs = new GameConfigs();
+
+            configs.EnemiesConfig = UpdateEnemiesConfig(configs.EnemiesConfig, settings);
+            configs.CollectablesConfig = UpdateCollectablesConfig(configs.CollectablesConfig, settings);
+            
+            return configs;
+        }
+
+        private static EnemiesConfig UpdateEnemiesConfig(EnemiesConfig enemiesConfig, JsonSerializerSettings settings)
+        {
+            if (enemiesConfig == null)
+                enemiesConfig = new EnemiesConfig();
+                
+            if (enemiesConfig.EnemiesDescription == null)
+                enemiesConfig.EnemiesDescription = new List<EnemyDescription>();
+            
+            List<EntityType> existingEnemyTypes = enemiesConfig.EnemiesDescription
+                .Select(ed => ed.EntityType)
+                .ToList();
+            
+            List<EntityType> allEnemyTypes = Enum.GetValues(typeof(EntityType))
+                .Cast<EntityType>()
+                .Where(et => et.ToString().ToLower().Contains("enemy"))
+                .ToList();
+            
+            foreach (var enemyDesc in enemiesConfig.EnemiesDescription)
+            {
+                if (enemyDesc.EnemyConfig != null)
+                {
+                    string oldJson = JsonConvert.SerializeObject(enemyDesc.EnemyConfig, settings);
+                    enemyDesc.EnemyConfig = JsonConvert.DeserializeObject<EnemyConfig>(oldJson, settings);
+                }
+            }
+            
+            foreach (EntityType enemyType in allEnemyTypes)
+            {
+                if (!existingEnemyTypes.Contains(enemyType))
+                {
+                    enemiesConfig.EnemiesDescription.Add(new EnemyDescription
+                    {
+                        EntityType = enemyType,
+                        EnemyConfig = new EnemyConfig()
+                    });
+                }
+            }
+            
+            return enemiesConfig;
+        }
+
+        private static CollectablesConfig UpdateCollectablesConfig(CollectablesConfig collectablesConfig, JsonSerializerSettings settings)
+        {
+            if (collectablesConfig == null)
+                collectablesConfig = new CollectablesConfig();
+                
+            if (collectablesConfig.CollectablesDescription == null)
+                collectablesConfig.CollectablesDescription = new List<CollectableDescription>();
+            
+            List<EntityType> existingCollectableTypes = collectablesConfig.CollectablesDescription
+                .Select(cd => cd.EntityType)
+                .ToList();
+            
+            List<EntityType> allCollectableTypes = Enum.GetValues(typeof(EntityType))
+                .Cast<EntityType>()
+                .Where(et => et.ToString().ToLower().Contains("collectable"))
+                .ToList();
+            
+            foreach (var collectableDesc in collectablesConfig.CollectablesDescription)
+            {
+                if (collectableDesc.CollectableConfig != null)
+                {
+                    string oldJson = JsonConvert.SerializeObject(collectableDesc.CollectableConfig, settings);
+                    collectableDesc.CollectableConfig = JsonConvert.DeserializeObject<CollectableConfig>(oldJson, settings);
+                }
+            }
+            
+            foreach (EntityType collectableType in allCollectableTypes)
+            {
+                if (!existingCollectableTypes.Contains(collectableType))
+                {
+                    collectablesConfig.CollectablesDescription.Add(new CollectableDescription
+                    {
+                        EntityType = collectableType,
+                        CollectableConfig = new CollectableConfig()
+                    });
+                }
+            }
+            
+            return collectablesConfig;
         }
     }
 }

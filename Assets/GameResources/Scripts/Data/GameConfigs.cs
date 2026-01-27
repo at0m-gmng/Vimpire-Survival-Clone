@@ -1,7 +1,7 @@
-﻿namespace GameResources.Scripts.Configs
+﻿namespace GameResources.Scripts.Data
 {
     using System;
-    using Data.Entities;
+    using Entities;
 
     [Serializable]
     public class GameConfigs
@@ -10,9 +10,11 @@
         {
             PlayerConfig = new PlayerConfig();
             EnemiesConfig = new EnemiesConfig();
+            CollectablesConfig = new CollectablesConfig();
         }
         
         public PlayerConfig PlayerConfig;
         public EnemiesConfig EnemiesConfig;
+        public CollectablesConfig CollectablesConfig;
     }
 }

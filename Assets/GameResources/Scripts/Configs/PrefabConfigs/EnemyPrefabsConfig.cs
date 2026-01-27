@@ -11,7 +11,7 @@
     {
         [field: SerializeField] public List<EnemyPrefab> EnemyPrefabs { get; private set; } = new();
     }
-    
+
     [Serializable]
     public class EnemyPrefab
     {

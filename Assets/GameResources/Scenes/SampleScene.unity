@@ -465,10 +465,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPrefabsConfig: {fileID: 11400000, guid: 1322144f92db6fb488069be73e3257aa, type: 2}
   _enemyPrefabsConfig: {fileID: 11400000, guid: a02c41b1868453d499a0af08ecebc31d, type: 2}
+  _collectablePrefabsConfig: {fileID: 11400000, guid: 7a3f24e7fd3e77b4a8b44857461422fc, type: 2}
   _inputConfig: {fileID: 11400000, guid: 23d606673469b0b43bc378e2357ed90d, type: 2}
   _cameraConfig: {fileID: 11400000, guid: a649e60ae7df9ab4cadbaa0c9801aa66, type: 2}
   _playerPool: {fileID: 539056124}
   _enemiesPool: {fileID: 1997427697}
+  _collectablesPool: {fileID: 1290620941}
 --- !u!4 &540840970
 Transform:
   m_ObjectHideFlags: 0
@@ -707,7 +709,39 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 539056124}
   - {fileID: 1997427697}
+  - {fileID: 1290620941}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1290620940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1290620941}
+  m_Layer: 0
+  m_Name: CollectablesPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1290620941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290620940}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1039029927}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1446563926
 GameObject:

@@ -19,6 +19,7 @@
     [Serializable]
     public class EnemyConfig : EntityConfig
     {
+        public EntityType ExperienceType = EntityType.CollectableSmallExperience;
         public float MoveSpeed = 4f;
         public float Health = 10;
     }

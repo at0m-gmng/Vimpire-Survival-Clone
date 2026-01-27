@@ -79,7 +79,7 @@ namespace GameResources.Scripts.Facades
 
         private void OnEntityDestroyed()
         {
-            _signalBus?.Fire(new EntityKilledSignal(_entityType));
+            _signalBus?.Fire(new EntityKilledSignal(_config.ExperienceType, _config.ExperienceType, transform.position));
             ReturnToPool();
         }
     }

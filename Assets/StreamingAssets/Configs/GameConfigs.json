@@ -11,6 +11,7 @@
       {
         "EntityType": "EnemyFast",
         "EnemyConfig": {
+          "ExperienceType": "CollectableSmallExperience",
           "MoveSpeed": 8.0,
           "Health": 5.0
         }
@@ -18,8 +19,20 @@
       {
         "EntityType": "EnemySlow",
         "EnemyConfig": {
+          "ExperienceType": "CollectableSmallExperience",
           "MoveSpeed": 4.0,
           "Health": 10.0
+        }
+      }
+    ]
+  },
+  "CollectablesConfig": {
+    "CollectablesDescription": [
+      {
+        "EntityType": "CollectableSmallExperience",
+        "CollectableConfig": {
+          "Experience": 10.0,
+          "CollectSpeed": 20.0
         }
       }
     ]

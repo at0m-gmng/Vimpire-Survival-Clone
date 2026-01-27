@@ -12,16 +12,16 @@
 
     public class EnemySpawnSystem : IDisposable
     {
-        public EnemySpawnSystem(SignalBus signalBus, IFactoryManager enemyFactory)
+        public EnemySpawnSystem(SignalBus signalBus, IEnemyFactoryManager enemyEnemyFactory)
         {
-            _enemyFactory = enemyFactory;
+            _enemyEnemyFactory = enemyEnemyFactory;
             _signalBus = signalBus;
         
             _signalBus.Subscribe<PlayerCreatedSignal>(OnPlayerCreated);
             _signalBus.Subscribe<EntityKilledSignal>(OnEntityKilled);
         }
         private readonly SignalBus _signalBus;
-        private readonly IFactoryManager _enemyFactory;
+        private readonly IEnemyFactoryManager _enemyEnemyFactory;
 
         private const string ENEMY_ENTITY = "Enemy";
         
@@ -68,7 +68,7 @@
                 Vector3 randomSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
                 EnemyDescription enemyDescription = _enemiesConfig.EnemiesDescription[Random.Range(0, _enemiesConfig.EnemiesDescription.Count)];
                 
-                _enemyFactory.GetFactory(enemyDescription.EntityType).Create(new EnemySpawnData
+                _enemyEnemyFactory.GetFactory(enemyDescription.EntityType).Create(new EnemySpawnData
                 (
                     randomSpawnPoint,
                     _playerTarget,

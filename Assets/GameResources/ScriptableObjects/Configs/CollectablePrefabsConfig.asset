@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c990e3949dd54e048a7512b56912ebab, type: 3}
+  m_Name: CollectablePrefabsConfig
+  m_EditorClassIdentifier: 
+  <CollectablePrefabs>k__BackingField:
+  - EntityType: 1000
+    CollectableFacade: {fileID: 7876443633049516230, guid: e6f78a76aca3c814c99dfedab14a04c0, type: 3}

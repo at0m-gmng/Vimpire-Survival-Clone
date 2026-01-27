@@ -6,9 +6,9 @@
     using Data;
     using Zenject;
 
-    public class EnemyFactoryManager : IFactoryManager
+    public class EnemyEnemyFactoryManager : IEnemyFactoryManager
     {
-        public EnemyFactoryManager(DiContainer container, EnemyPrefabsConfig config)
+        public EnemyEnemyFactoryManager(DiContainer container, EnemyPrefabsConfig config)
         {
             _container = container;
             _config = config;
@@ -39,7 +39,7 @@
         }
     }
 
-    public interface IFactoryManager
+    public interface IEnemyFactoryManager
     {
         public EnemyFactory GetFactory(EntityType entityType);
     }

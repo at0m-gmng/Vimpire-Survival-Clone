@@ -1,8 +1,8 @@
 ﻿namespace GameResources.Scripts.EntryPoint
 {
     using System.Collections.Generic;
-    using Configs;
     using Cysharp.Threading.Tasks;
+    using Data;
     using SaveLoadSystem;
     using SpawnSystem;
     using UnityEngine;
@@ -12,12 +12,14 @@
     {
         [Inject]
         private void Construct(SignalBus signalBus, ISaveLoadSystem saveLoadSystem, 
-            PlayerSpawnSystem playerSpawnSystem, EnemySpawnSystem enemySpawnSystem)
+            PlayerSpawnSystem playerSpawnSystem, EnemySpawnSystem enemySpawnSystem, 
+            CollectablesSpawnSystem collectablesSpawnSystem)
         {
             _signalBus = signalBus;
             _saveLoadSystem = saveLoadSystem;
             _playerSpawnSystem = playerSpawnSystem;
             _enemySpawnSystem = enemySpawnSystem;
+            _collectablesSpawnSystem = collectablesSpawnSystem;
         }
 
         private ISaveLoadSystem _saveLoadSystem;
@@ -25,6 +27,7 @@
         private GameConfigs _gameConfigs = new();
         private PlayerSpawnSystem _playerSpawnSystem;
         private EnemySpawnSystem _enemySpawnSystem;
+        private CollectablesSpawnSystem _collectablesSpawnSystem;
 
         [SerializeField] private List<Transform> _enemyPositions = default;
         [SerializeField] private BoxCollider _boxCollider = default;
@@ -39,6 +42,7 @@
             _playerSpawnSystem.StartSystem(transform, _gameConfigs.PlayerConfig);
             await UniTask.Delay(100);
             _enemySpawnSystem.StartSystem(GetTopFaceVertices(20), _gameConfigs.EnemiesConfig, 20, 0.15f);
+            _collectablesSpawnSystem.StartSystem(_gameConfigs.CollectablesConfig);
         }
         
         private List<Vector3> GetTopFaceVertices(int pointsPerAxis)

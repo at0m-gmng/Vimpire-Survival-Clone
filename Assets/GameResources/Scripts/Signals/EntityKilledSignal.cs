@@ -1,12 +1,19 @@
 namespace GameResources.Scripts.Signals
 {
     using Data;
-    using Facades;
+    using UnityEngine;
 
     public class EntityKilledSignal
     {
-        public EntityType EntityType { get; }
+        public EntityKilledSignal(EntityType entityType, EntityType rewardType, Vector3 position)
+        {
+            EntityType = entityType;
+            RewardType = rewardType;
+            Position = position;
+        }
 
-        public EntityKilledSignal(EntityType entityType) => EntityType = entityType;
+        public readonly EntityType EntityType;
+        public readonly EntityType RewardType;
+        public readonly Vector3 Position;
     }
 }
