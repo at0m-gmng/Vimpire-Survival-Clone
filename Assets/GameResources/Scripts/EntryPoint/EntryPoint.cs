@@ -35,9 +35,14 @@ namespace GameResources.Scripts.EntryPoint
 
         private async void Start()
         {
-            if (_saveLoadSystem.TryLoadData<GameConfigs>(out GameConfigs gameConfigs, "GameConfigs.json"))
+            (bool success, GameConfigs gameConfigs) = await _saveLoadSystem.TryLoadDataAsync<GameConfigs>("GameConfigs.json");
+            if (success)
             {
                 _gameConfigs = gameConfigs;
+            }
+            else
+            {
+                Debug.LogWarning("Failed to load GameConfigs, using default values");
             }
             
             _signalBus.Fire(new GameConfigLoadSignal(_gameConfigs));

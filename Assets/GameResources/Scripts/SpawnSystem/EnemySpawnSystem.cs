@@ -1,4 +1,4 @@
-﻿namespace GameResources.Scripts.SpawnSystem
+namespace GameResources.Scripts.SpawnSystem
 {
     using System;
     using System.Collections.Generic;
@@ -65,6 +65,12 @@
         {
             if (_currentEnemyCount < _maxEnemies && _playerTarget != null && _spawnPoints.Count != 0)
             {
+                if (_enemiesConfig == null || _enemiesConfig.EnemiesDescription == null || _enemiesConfig.EnemiesDescription.Count == 0)
+                {
+                    Debug.LogWarning("EnemiesConfig or EnemiesDescription is empty. Cannot spawn enemies.");
+                    return;
+                }
+                
                 Vector3 randomSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
                 EnemyDescription enemyDescription = _enemiesConfig.EnemiesDescription[Random.Range(0, _enemiesConfig.EnemiesDescription.Count)];
                 
