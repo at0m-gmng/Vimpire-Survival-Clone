@@ -48,8 +48,6 @@ namespace GameResources.Scripts.Installers
         {
             SignalBusInstaller.Install(Container);
 
-            Container.DeclareSignal<ExperienceGainedSignal>();
-            Container.DeclareSignal<LevelUpSignal>();
             Container.DeclareSignal<EntityKilledSignal>();
             Container.DeclareSignal<GameConfigLoadSignal>();
             Container.DeclareSignal<PlayerCreatedSignal>();
