@@ -52,6 +52,7 @@ namespace GameResources.Scripts.Installers
             Container.DeclareSignal<GameConfigLoadSignal>();
             Container.DeclareSignal<PlayerCreatedSignal>();
             Container.DeclareSignal<PlayerDestroyedSignal>();
+            Container.DeclareSignal<ExperienceCollectedSignal>();
         }
 
         private void BindFactories()

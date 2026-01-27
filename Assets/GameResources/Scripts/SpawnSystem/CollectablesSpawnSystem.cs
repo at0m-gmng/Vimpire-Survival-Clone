@@ -15,6 +15,7 @@
             _collectableFactory = collectableFactory;
             _signalBus = signalBus;
 
+            _signalBus.Subscribe<PlayerCreatedSignal>(OnPlayerCreated);
             _signalBus.Subscribe<EntityKilledSignal>(OnEntityKilled);
         }
 
@@ -24,10 +25,9 @@
         private Transform _playerTarget;
         private CollectablesConfig _collectablesConfig;
 
-        public void StartSystem(CollectablesConfig collectablesConfig)
-        {
-            _collectablesConfig = collectablesConfig;
-        }
+        public void StartSystem(CollectablesConfig collectablesConfig) => _collectablesConfig = collectablesConfig;
+
+        private void OnPlayerCreated(PlayerCreatedSignal signal) => _playerTarget = signal.Transform;
 
         private void OnEntityKilled(EntityKilledSignal entityKilledSignal)
         {

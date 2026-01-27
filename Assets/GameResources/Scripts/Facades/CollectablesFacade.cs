@@ -4,6 +4,7 @@
     using Data.Entities;
     using Factories;
     using MovementSystem;
+    using Signals;
     using UniRx;
     using UnityEngine;
     using Zenject;
@@ -11,12 +12,12 @@
     public class CollectablesFacade : AbstractFacade<CollectableConfig>, ICollectable,
         IPoolable<CollectableSpawnData, IMemoryPool>
     {
-        private IDisposable _updateSubscription;
+        private IDisposable _updateSubscription = null;
         private IMemoryPool _pool;
         private Transform _targetPlayer;
 
         private void Start() => _movementController = new BaseFollowingController(
-            new FollowingData(transform, _targetPlayer, _config.CollectSpeed));
+            new FollowingData(EntityTransform, _targetPlayer, _config.CollectSpeed));
 
         protected override void OnDestroy()
         {
@@ -52,8 +53,6 @@
         
         #endregion
 
-        public void Collect() => ReturnToPool();
-
         public void InitializeCollect()
         {
             if (_updateSubscription == null)
@@ -61,6 +60,12 @@
                 _updateSubscription = Observable.EveryUpdate()
                     .Subscribe(_ => _movementController?.UpdateMovement());
             }
+        }
+
+        public void Collect()
+        {
+            _signalBus.Fire(new ExperienceCollectedSignal(_config.Experience));
+            ReturnToPool();
         }
     }
 

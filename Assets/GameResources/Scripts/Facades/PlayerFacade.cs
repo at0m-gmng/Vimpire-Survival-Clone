@@ -3,6 +3,7 @@ namespace GameResources.Scripts.Facades
     using System;
     using AttackSystem;
     using Data.Entities;
+    using ExperienceSystem;
     using Factories;
     using InputSystem;
     using MovementSystem;
@@ -23,6 +24,8 @@ namespace GameResources.Scripts.Facades
 
         [SerializeField] private LayerMask _targetMask;
         [SerializeField] private GameObject _damageEffect;
+        [SerializeField] private Collider _initializeCollectTrigger;
+        [SerializeField] private Collider _collectTrigger;
         
         #region POOL
 
@@ -35,12 +38,10 @@ namespace GameResources.Scripts.Facades
             _movementController = new PlayerMovementController(EntityTransform, _config, _inputSystem);
             _attackController = new PlayerAttackController(EntityTransform, _damageEffect, _targetMask,
                 _config.AttackRange, _config.AttackDamage, _config.AttackCooldown);
-            // _experienceController = new PlayerExperienceController(_signalBus);
-            // _levelController = new PlayerLevelController(_signalBus);
+            _experienceController = new ExperienceController(_initializeCollectTrigger,_collectTrigger);
 
             _attackController.Start();
-            // _experienceController?.Start();
-            // _levelController?.Start();
+            _experienceController?.Start();
 
             _updateSubscription = Observable.EveryUpdate()
                 .Subscribe(_ =>
@@ -53,6 +54,8 @@ namespace GameResources.Scripts.Facades
         {
             _pool = null;
             _updateSubscription?.Dispose();
+            _attackController?.Dispose();
+            _experienceController?.Dispose();
         }
 
         public void ReturnToPool()

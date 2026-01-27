@@ -3,6 +3,7 @@ namespace GameResources.Scripts.Facades
     using AttackSystem;
     using Data;
     using Data.Entities;
+    using ExperienceSystem;
     using MovementSystem;
     using UnityEngine;
     using Zenject;
@@ -29,6 +30,7 @@ namespace GameResources.Scripts.Facades
 
         protected AbstractMovementController _movementController;
         protected AbstractAttackController _attackController;
+        protected ExperienceController _experienceController;
         protected T _config;
 
         protected virtual void OnDestroy()
