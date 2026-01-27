@@ -5,6 +5,7 @@ namespace GameResources.Scripts.Installers
     using Facades;
     using Factories;
     using InputSystem;
+    using LevelUpSystem;
     using SaveLoadSystem;
     using Signals;
     using SpawnSystem;
@@ -53,6 +54,7 @@ namespace GameResources.Scripts.Installers
             Container.DeclareSignal<PlayerCreatedSignal>();
             Container.DeclareSignal<PlayerDestroyedSignal>();
             Container.DeclareSignal<ExperienceCollectedSignal>();
+            Container.DeclareSignal<ExperienceProgressChangedSignal>();
         }
 
         private void BindFactories()
@@ -89,6 +91,7 @@ namespace GameResources.Scripts.Installers
             Container.BindInterfacesTo<SaveLoadSystem>().AsSingle();
             Container.BindInterfacesTo<InputSystem>().AsSingle();
             Container.BindInterfacesTo<CameraSystem>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelUpSystem>().AsSingle();
             Container.Bind<PlayerSpawnSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemySpawnSystem>().AsSingle();
             Container.Bind<CollectablesSpawnSystem>().AsSingle();
