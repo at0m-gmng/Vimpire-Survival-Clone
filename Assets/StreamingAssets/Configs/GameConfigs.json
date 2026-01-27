@@ -40,19 +40,33 @@
   "AbilitiesConfig": {
     "AbilitiesDescription": [
       {
+        "EntityType": "TriggerAbility",
+        "AbilityConfig": {
+          "Damage": 1.0,
+          "Cooldown": 0.0,
+          "Radius": 1.0,
+          "Speed": 10.0,
+          "EntitiesCount": 0
+        }
+      },
+      {
         "EntityType": "AuraAbility",
         "AbilityConfig": {
           "Damage": 1.0,
-          "Cooldown": 1.0,
-          "Radius": 3.0
+          "Cooldown": 0.2,
+          "Radius": 3.0,
+          "Speed": 0.0,
+          "EntitiesCount": 0
         }
       },
       {
         "EntityType": "ProjectileAbility",
         "AbilityConfig": {
-          "Damage": 1.0,
-          "Cooldown": 1.0,
-          "Radius": 3.0
+          "Damage": 100.0,
+          "Cooldown": 0.5,
+          "Radius": 50.0,
+          "Speed": 10.0,
+          "EntitiesCount": 0
         }
       },
       {
@@ -60,7 +74,19 @@
         "AbilityConfig": {
           "Damage": 1.0,
           "Cooldown": 1.0,
-          "Radius": 3.0
+          "Radius": 3.0,
+          "Speed": 0.0,
+          "EntitiesCount": 0
+        }
+      },
+      {
+        "EntityType": "RangeAttackAbility",
+        "AbilityConfig": {
+          "Damage": 5.0,
+          "Cooldown": 1.0,
+          "Radius": 3.0,
+          "Speed": 0.0,
+          "EntitiesCount": 0
         }
       }
     ]

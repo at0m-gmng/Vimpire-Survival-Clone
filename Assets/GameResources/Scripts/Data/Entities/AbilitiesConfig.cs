@@ -13,15 +13,17 @@
     [Serializable]
     public class AbilityDescription
     {
-        public EntityType EntityType;
-        public AbilityConfig AbilityConfig;
+        public EntityType EntityType = EntityType.RangeAttackAbility;
+        public AbilityConfig AbilityConfig = new();
     }
 
     [Serializable]
     public class AbilityConfig : EntityConfig
     {
-        public float Damage = 1f;
+        public float Damage = 5f;
         public float Cooldown = 1f;
         public float Radius = 3f;
+        public float Speed = 0f;
+        public int EntitiesCount = 0;
     }
 }

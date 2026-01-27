@@ -19,6 +19,7 @@ namespace GameResources.Scripts.Installers
         [SerializeField] private PlayerPrefabsConfig _playerPrefabsConfig;
         [SerializeField] private EnemyPrefabsConfig _enemyPrefabsConfig;
         [SerializeField] private CollectablePrefabsConfig _collectablePrefabsConfig;
+        [SerializeField] private ProjectilePrefabsConfig _projectilePrefabsConfig;
 
         [Header("Configs")] 
         [SerializeField] private InputConfig _inputConfig = default;
@@ -28,6 +29,7 @@ namespace GameResources.Scripts.Installers
         private Transform _playerPool = default;
         [SerializeField] private Transform _enemiesPool = default;
         [SerializeField] private Transform _collectablesPool = default;
+        [SerializeField] private Transform _projectilePool = default;
 
         public override void InstallBindings()
         {
@@ -43,6 +45,7 @@ namespace GameResources.Scripts.Installers
             Container.BindInstance(_cameraConfig).AsSingle().IfNotBound();
             Container.BindInstance(_enemyPrefabsConfig).AsSingle().IfNotBound();
             Container.BindInstance(_collectablePrefabsConfig).AsSingle().IfNotBound();
+            Container.BindInstance(_projectilePrefabsConfig).AsSingle().IfNotBound();
         }
 
         private void BindSignals()
@@ -63,6 +66,7 @@ namespace GameResources.Scripts.Installers
         {
             Container.BindInterfacesTo<EnemyEnemyFactoryManager>().AsSingle();
             Container.BindInterfacesTo<CollectablesFactoryManager>().AsSingle();
+            Container.BindInterfacesTo<ProjectileFactoryManager>().AsSingle();
             
             Container.BindFactory<PlayerSpawnData, PlayerFacade, PlayerFactory>()
                 .FromMonoPoolableMemoryPool(x => x.WithInitialSize(1)
@@ -85,6 +89,15 @@ namespace GameResources.Scripts.Installers
                     .FromMonoPoolableMemoryPool(x => x.WithInitialSize(20)
                     .FromComponentInNewPrefab(_collectablePrefabsConfig.CollectablePrefabs[i].CollectableFacade)
                     .UnderTransform(_collectablesPool));
+            }
+            
+            for (int i = 0; i < _projectilePrefabsConfig.ProjectilePrefabs.Count; i++)
+            {
+                Container.BindFactory<ProjectileSpawnData, ProjectileFacade, ProjectileFactory>()
+                    .WithId(_projectilePrefabsConfig.ProjectilePrefabs[i].EntityType.ToString())
+                    .FromMonoPoolableMemoryPool(x => x.WithInitialSize(10)
+                    .FromComponentInNewPrefab(_projectilePrefabsConfig.ProjectilePrefabs[i].ProjectileFacade)
+                    .UnderTransform(_projectilePool));
             }
         }
 

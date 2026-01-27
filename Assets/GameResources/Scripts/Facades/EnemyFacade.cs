@@ -79,13 +79,8 @@ namespace GameResources.Scripts.Facades
 
         #endregion
 
-        private void OnEntityDamaged(float currentHealth)
-        {
-            if (_healthProgressBar != null)
-            {
-                _healthProgressBar.UpdateHealth(currentHealth, _damageableComponent.MaxHealth);
-            }
-        }
+        private void OnEntityDamaged(float currentHealth) 
+            => _healthProgressBar.UpdateHealth(_damageableComponent.Health, _damageableComponent.MaxHealth);
 
         private void OnEntityDestroyed()
         {

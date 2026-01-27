@@ -38,6 +38,7 @@ Transform:
   - {fileID: 1073102103733810289}
   - {fileID: 428065577115966731}
   - {fileID: 6667023345831834287}
+  - {fileID: 1573654267393335031}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2706662943677701333
@@ -165,6 +166,60 @@ MonoBehaviour:
   _collectTrigger: {fileID: 1398542472088949767}
   _auraDamageTrigger: {fileID: 2683905664940277594}
   _auraEffect: {fileID: 4362930131100951784}
+  _projectileAbilityTrigger: {fileID: 7050903277879310663}
+--- !u!1 &631570106465392575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1573654267393335031}
+  - component: {fileID: 7050903277879310663}
+  m_Layer: 6
+  m_Name: ProjectileTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1573654267393335031
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631570106465392575}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4994577456984850302}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7050903277879310663
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631570106465392575}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4643716656535584562
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,6 +337,10 @@ PrefabInstance:
     - target: {fileID: 5512888166054874065, guid: 0f82af1556219c041a9949557e657dfc, type: 3}
       propertyPath: m_Name
       value: PlayerDamageEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512888166054874065, guid: 0f82af1556219c041a9949557e657dfc, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5512888166054874065, guid: 0f82af1556219c041a9949557e657dfc, type: 3}
       propertyPath: m_IsActive

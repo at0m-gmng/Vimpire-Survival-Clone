@@ -18,8 +18,13 @@ namespace GameResources.Scripts.Facades
         IPoolable<PlayerSpawnData, IMemoryPool>
     {
         [Inject]
-        private void Construct(IInputSystem inputSystem) => _inputSystem = inputSystem;
+        private void Construct(IInputSystem inputSystem, IProjectileFactoryManager projectileFactoryManager)
+        {
+            _inputSystem = inputSystem;
+            _projectileFactoryManager = projectileFactoryManager;
+        }
         private IInputSystem _inputSystem;
+        private IProjectileFactoryManager _projectileFactoryManager;
 
         private IDisposable _updateSubscription;
         private IMemoryPool _pool;
@@ -32,7 +37,8 @@ namespace GameResources.Scripts.Facades
         [SerializeField] private Collider _collectTrigger;
         [SerializeField] private Collider _auraDamageTrigger;
         [SerializeField] private GameObject _auraEffect;
-        
+        [SerializeField] private Collider _projectileAbilityTrigger;
+
         #region POOL
 
         public void OnSpawned(PlayerSpawnData playerSpawnData, IMemoryPool pool)
@@ -60,16 +66,9 @@ namespace GameResources.Scripts.Facades
 
         private void CreateRangeAttackAbility()
         {
+            AbilityDescription abilityDescription = new();
             RangeAttackAbility rangeAttack = new(EntityTransform, _damageEffect, _targetMask);
-            
-            AbilityConfig attackConfig = new()
-            {
-                Damage = _config.AttackDamage,
-                Radius = _config.AttackRange,
-                Cooldown = _config.AttackCooldown
-            };
-            
-            rangeAttack.Initialize(attackConfig);
+            rangeAttack.Initialize(abilityDescription);
             _abilities.Add(rangeAttack);
         }
 
@@ -84,19 +83,13 @@ namespace GameResources.Scripts.Facades
             {
                 Ability existingAbility = FindAbilityByEntityType(entityType);
 
-                if (existingAbility != null)
+                if (existingAbility == null)
                 {
-                    existingAbility.Initialize(abilityDescription.AbilityConfig);
+                    existingAbility = CreateAbility(entityType);
+                    _abilities.Add(existingAbility);
+
                 }
-                else
-                {
-                    Ability newAbility = CreateAbility(entityType);
-                    if (newAbility != null)
-                    {
-                        newAbility.Initialize(abilityDescription.AbilityConfig);
-                        _abilities.Add(newAbility);
-                    }
-                }
+                existingAbility.Initialize(abilityDescription);
             }
         }
 
@@ -106,6 +99,8 @@ namespace GameResources.Scripts.Facades
             {
                 case EntityType.AuraAbility:
                     return _abilities.OfType<AuraDamageAbility>().FirstOrDefault();
+                case EntityType.ProjectileAbility:
+                    return _abilities.OfType<ProjectileAbility>().FirstOrDefault();
                 default:
                     return null;
             }
@@ -117,6 +112,8 @@ namespace GameResources.Scripts.Facades
             {
                 case EntityType.AuraAbility:
                     return new AuraDamageAbility(_auraDamageTrigger, _auraEffect, _targetMask);
+                case EntityType.ProjectileAbility:
+                    return new ProjectileAbility(_projectileFactoryManager, _projectileAbilityTrigger, EntityTransform);
                 default:
                     return null;
             }

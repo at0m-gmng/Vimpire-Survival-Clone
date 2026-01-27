@@ -8,10 +8,6 @@ namespace GameResources.Scripts.HealthSystem
     {
         public event Action EntityDestroyed;
         public event Action<float> EntityDamaged;
-        
-        private EnemyConfig _config;
-
-        public bool IsAlive => Health > 0;
 
         public float Health
         {
@@ -34,17 +30,18 @@ namespace GameResources.Scripts.HealthSystem
             }
         }
 
+        public float MaxHealth { get; private set; } = default;
+
+        private EnemyConfig _config;
         private float _health = default;
 
-        public float MaxHealth { get; private set; } = default;
-        
         public void Initialize(EnemyConfig config)
         {
             _config = config;
             Reset();
         }
 
-        public void TakeDamage(int damage) => Health -= damage;
+        public void TakeDamage(float damage) => Health -= damage;
 
         public void Reset()
         {

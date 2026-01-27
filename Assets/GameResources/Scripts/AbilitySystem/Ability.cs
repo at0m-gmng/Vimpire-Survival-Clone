@@ -7,17 +7,20 @@ namespace GameResources.Scripts.AbilitySystem
 
     public abstract class Ability : IDisposable
     {
-        protected AbilityConfig Config { get; private set; }
+        protected AbilityConfig Config => _configDescription.AbilityConfig;
+        protected AbilityDescription _configDescription;
+
         protected IDisposable UpdateSubscription;
 
-        public void Initialize(AbilityConfig config)
+        public void Initialize(AbilityDescription config)
         {
-            Config = config;
+            _configDescription = config;
             OnInitialize();
         }
 
         protected void StartUpdate()
         {
+            UpdateSubscription?.Dispose();
             if (UpdateSubscription == null)
             {
                 UpdateSubscription = Observable.EveryUpdate()

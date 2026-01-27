@@ -150,7 +150,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1303835328376693614, guid: 90e702d7abb1d404e888f11d605f104b, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1303835328376693614, guid: 90e702d7abb1d404e888f11d605f104b, type: 3}
       propertyPath: m_Pivot.y
@@ -210,7 +210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1303835328376693614, guid: 90e702d7abb1d404e888f11d605f104b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1303835328376693614, guid: 90e702d7abb1d404e888f11d605f104b, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -228,28 +228,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1868216590567085526, guid: 90e702d7abb1d404e888f11d605f104b, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2701761708792343256, guid: 90e702d7abb1d404e888f11d605f104b, type: 3}
       propertyPath: m_Name
       value: HealthCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 7221679288449864442, guid: 90e702d7abb1d404e888f11d605f104b, type: 3}
-      propertyPath: _fillTransform
-      value: 
-      objectReference: {fileID: 2522019932724545919}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90e702d7abb1d404e888f11d605f104b, type: 3}
---- !u!224 &2522019932724545919 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1868216590567085526, guid: 90e702d7abb1d404e888f11d605f104b, type: 3}
-  m_PrefabInstance: {fileID: 4246119101698563241}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2951293175936925639 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1303835328376693614, guid: 90e702d7abb1d404e888f11d605f104b, type: 3}
