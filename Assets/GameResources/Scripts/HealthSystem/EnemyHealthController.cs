@@ -26,7 +26,7 @@ namespace GameResources.Scripts.HealthSystem
                 {
                     _health = 0;
                 }
-                EntityDamaged?.Invoke(value);
+                EntityDamaged?.Invoke(_health);
                 if (_health <= 0)
                 {
                     EntityDestroyed?.Invoke();

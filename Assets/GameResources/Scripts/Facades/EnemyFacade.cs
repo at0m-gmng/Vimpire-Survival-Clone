@@ -6,6 +6,7 @@ namespace GameResources.Scripts.Facades
     using HealthSystem;
     using MovementSystem;
     using Signals;
+    using UI;
     using UniRx;
     using UnityEngine;
     using Zenject;
@@ -14,6 +15,7 @@ namespace GameResources.Scripts.Facades
         IPoolable<EnemySpawnData, IMemoryPool>
     {
         [SerializeField] private EnemyHealthController _damageableComponent = default;
+        [SerializeField] private HealthProgressBar _healthProgressBar = default;
         [SerializeField] private Vector3 _offset = default;
 
         private IDisposable _updateSubscription;
@@ -51,6 +53,12 @@ namespace GameResources.Scripts.Facades
             _targetPlayer = enemySpawnData.TargetPlayer;
             _damageableComponent.Initialize(_config);
             
+            if (_healthProgressBar != null)
+            {
+                _healthProgressBar.UpdateHealth(_damageableComponent.Health, _damageableComponent.MaxHealth);
+                _healthProgressBar.SetVisible(true);
+            }
+            
             _updateSubscription = Observable.EveryUpdate()
                 .Subscribe(_ => _movementController?.UpdateMovement());
         }
@@ -60,6 +68,11 @@ namespace GameResources.Scripts.Facades
             _damageableComponent.Reset();
             _updateSubscription?.Dispose();
             _pool = null;
+            
+            if (_healthProgressBar != null)
+            {
+                _healthProgressBar.SetVisible(false);
+            }
         }
 
         public void ReturnToPool()
@@ -72,9 +85,12 @@ namespace GameResources.Scripts.Facades
 
         #endregion
 
-        private void OnEntityDamaged(float obj)
+        private void OnEntityDamaged(float currentHealth)
         {
-            
+            if (_healthProgressBar != null)
+            {
+                _healthProgressBar.UpdateHealth(currentHealth, _damageableComponent.MaxHealth);
+            }
         }
 
         private void OnEntityDestroyed()

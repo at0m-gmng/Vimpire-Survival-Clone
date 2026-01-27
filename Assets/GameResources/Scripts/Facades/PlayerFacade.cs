@@ -45,7 +45,8 @@ namespace GameResources.Scripts.Facades
             _movementController = new PlayerMovementController(EntityTransform, _config, _inputSystem);
             _experienceController = new ExperienceController(_initializeCollectTrigger,_collectTrigger);
 
-            CreateRangeAttackAbility();
+            // CreateRangeAttackAbility();
+            CreateTestAuraAbility();
 
             _experienceController?.Start();
 
@@ -71,6 +72,21 @@ namespace GameResources.Scripts.Facades
             
             rangeAttack.Initialize(attackConfig);
             _abilities.Add(rangeAttack);
+        }
+
+        private void CreateTestAuraAbility()
+        {
+            AuraDamageAbility auraAbility = new AuraDamageAbility(_auraDamageTrigger, _auraEffect, _targetMask);
+            
+            AbilityConfig auraConfig = new AbilityConfig
+            {
+                Damage = 1f,
+                Radius = 3f,
+                Cooldown = 0.2f
+            };
+            
+            auraAbility.Initialize(auraConfig);
+            _abilities.Add(auraAbility);
         }
 
         private void OnRewardSelected(RewardSelectedSignal signal)
