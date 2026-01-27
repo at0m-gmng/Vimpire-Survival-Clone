@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863a878d45da40f8846ae3540ec2d854, type: 3}
+  m_Name: ProjectilePrefabsConfig
+  m_EditorClassIdentifier: 
+  <ProjectilePrefabs>k__BackingField:
+  - EntityType: 2001
+    ProjectileFacade: {fileID: 776556997541915710, guid: 4482c7859d7471e4a91333836d44d8e4, type: 3}
+  - EntityType: 2002
+    ProjectileFacade: {fileID: 5084412309699897758, guid: e70cb336f30129242818067244e98e2a, type: 3}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b216bbe02b9f46a79ae52eb5c585baaa, type: 3}
+  m_Name: EnemyPrefabsConfig
+  m_EditorClassIdentifier: 
+  <EnemyPrefabs>k__BackingField:
+  - EntityType: 100
+    EnemyFacade: {fileID: 2167898593724468931, guid: 02678488fe25dda4081b3475e8d1ec97, type: 3}
+  - EntityType: 101
+    EnemyFacade: {fileID: 2167898593724468931, guid: f7beff599fd82d745a82827abd27640c, type: 3}
