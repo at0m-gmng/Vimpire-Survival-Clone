@@ -11,10 +11,12 @@
             PlayerConfig = new PlayerConfig();
             EnemiesConfig = new EnemiesConfig();
             CollectablesConfig = new CollectablesConfig();
+            AbilitiesConfig = new AbilitiesConfig();
         }
         
         public PlayerConfig PlayerConfig;
         public EnemiesConfig EnemiesConfig;
         public CollectablesConfig CollectablesConfig;
+        public AbilitiesConfig AbilitiesConfig;
     }
 }
