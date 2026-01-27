@@ -45,8 +45,7 @@ namespace GameResources.Scripts.Facades
             _movementController = new PlayerMovementController(EntityTransform, _config, _inputSystem);
             _experienceController = new ExperienceController(_initializeCollectTrigger,_collectTrigger);
 
-            // CreateRangeAttackAbility();
-            CreateTestAuraAbility();
+            CreateRangeAttackAbility();
 
             _experienceController?.Start();
 
@@ -61,9 +60,9 @@ namespace GameResources.Scripts.Facades
 
         private void CreateRangeAttackAbility()
         {
-            RangeAttackAbility rangeAttack = new RangeAttackAbility(EntityTransform, _damageEffect, _targetMask);
+            RangeAttackAbility rangeAttack = new(EntityTransform, _damageEffect, _targetMask);
             
-            AbilityConfig attackConfig = new AbilityConfig
+            AbilityConfig attackConfig = new()
             {
                 Damage = _config.AttackDamage,
                 Radius = _config.AttackRange,
@@ -74,49 +73,29 @@ namespace GameResources.Scripts.Facades
             _abilities.Add(rangeAttack);
         }
 
-        private void CreateTestAuraAbility()
-        {
-            AuraDamageAbility auraAbility = new AuraDamageAbility(_auraDamageTrigger, _auraEffect, _targetMask);
-            
-            AbilityConfig auraConfig = new AbilityConfig
-            {
-                Damage = 1f,
-                Radius = 3f,
-                Cooldown = 0.2f
-            };
-            
-            auraAbility.Initialize(auraConfig);
-            _abilities.Add(auraAbility);
-        }
-
-        private void OnRewardSelected(RewardSelectedSignal signal)
-        {
-            CreateOrUpgradeAbility(signal.SelectedEntityType);
-        }
+        private void OnRewardSelected(RewardSelectedSignal signal) => CreateOrUpgradeAbility(signal.SelectedEntityType);
 
         private void CreateOrUpgradeAbility(EntityType entityType)
         {
             AbilityDescription abilityDescription = _abilitiesConfig.AbilitiesDescription
                 .FirstOrDefault(desc => desc.EntityType == entityType);
 
-            if (abilityDescription == null)
+            if (abilityDescription != null)
             {
-                return;
-            }
+                Ability existingAbility = FindAbilityByEntityType(entityType);
 
-            Ability existingAbility = FindAbilityByEntityType(entityType);
-
-            if (existingAbility != null)
-            {
-                existingAbility.Initialize(abilityDescription.AbilityConfig);
-            }
-            else
-            {
-                Ability newAbility = CreateAbility(entityType);
-                if (newAbility != null)
+                if (existingAbility != null)
                 {
-                    newAbility.Initialize(abilityDescription.AbilityConfig);
-                    _abilities.Add(newAbility);
+                    existingAbility.Initialize(abilityDescription.AbilityConfig);
+                }
+                else
+                {
+                    Ability newAbility = CreateAbility(entityType);
+                    if (newAbility != null)
+                    {
+                        newAbility.Initialize(abilityDescription.AbilityConfig);
+                        _abilities.Add(newAbility);
+                    }
                 }
             }
         }

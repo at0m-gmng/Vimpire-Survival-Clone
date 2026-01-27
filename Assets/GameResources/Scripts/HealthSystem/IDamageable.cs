@@ -10,7 +10,7 @@ namespace GameResources.Scripts.HealthSystem
         
         public float MaxHealth { get; }
         public float Health { get; }
-        public void Initialize(EnemiesConfig config);
+        public void Initialize(EnemyConfig config);
         public void TakeDamage(int damage);
         public void Reset();
     }

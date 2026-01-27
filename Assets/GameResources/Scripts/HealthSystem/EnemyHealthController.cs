@@ -44,8 +44,6 @@ namespace GameResources.Scripts.HealthSystem
             Reset();
         }
 
-        public void Initialize(EnemiesConfig config) => throw new NotImplementedException();
-
         public void TakeDamage(int damage) => Health -= damage;
 
         public void Reset()

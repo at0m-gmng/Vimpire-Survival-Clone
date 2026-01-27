@@ -41,10 +41,17 @@ namespace GameResources.Scripts.AbilitySystem
                 _damageTrigger.OnTriggerEnterAsObservable()
                     .Subscribe(collider =>
                     {
+                        if (collider == null || !collider.gameObject.activeInHierarchy)
+                            return;
+
                         int colliderLayer = 1 << collider.gameObject.layer;
                         if ((_targetLayerMask.value & colliderLayer) != 0)
                         {
-                            _detectedEnemies.Add(collider);
+                            IDamageable damageable = collider.GetComponent<IDamageable>();
+                            if (damageable != null && damageable.Health > 0)
+                            {
+                                _detectedEnemies.Add(collider);
+                            }
                         }
                     })
                     .AddTo(_disposables);
@@ -75,16 +82,20 @@ namespace GameResources.Scripts.AbilitySystem
         {
             foreach (Collider collider in _detectedEnemies.ToList())
             {
-                if (collider == null)
+                if (collider == null || !collider.gameObject.activeInHierarchy)
                 {
                     _detectedEnemies.Remove(collider);
                     continue;
                 }
 
                 IDamageable damageable = collider.GetComponent<IDamageable>();
-                if (damageable != null)
+                if (damageable != null && damageable.Health > 0)
                 {
                     damageable.TakeDamage((int)_currentDamage);
+                }
+                if (damageable == null || damageable.Health <= 0)
+                {
+                    _detectedEnemies.Remove(collider);
                 }
             }
         }

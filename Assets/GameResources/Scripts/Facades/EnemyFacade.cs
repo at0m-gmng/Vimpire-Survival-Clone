@@ -22,23 +22,11 @@ namespace GameResources.Scripts.Facades
         private IMemoryPool _pool;
         private Transform _targetPlayer;
 
-        private void Start()
-        {
-            _damageableComponent.EntityDamaged += OnEntityDamaged;
-            _damageableComponent.EntityDestroyed += OnEntityDestroyed;
-        
-            _movementController = new EnemyMovementController(transform, _targetPlayer, _config);
-        }
+        private void Start() => _movementController = new EnemyMovementController(transform, _targetPlayer, _config);
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            if (_damageableComponent != null)
-            {
-                _damageableComponent.EntityDamaged -= OnEntityDamaged;
-                _damageableComponent.EntityDestroyed -= OnEntityDestroyed;
-            }
-
             _updateSubscription?.Dispose();
         }
 
@@ -52,6 +40,8 @@ namespace GameResources.Scripts.Facades
             _config = enemySpawnData.EnemiesDescription.EnemyConfig;
             _targetPlayer = enemySpawnData.TargetPlayer;
             _damageableComponent.Initialize(_config);
+            _damageableComponent.EntityDamaged += OnEntityDamaged;
+            _damageableComponent.EntityDestroyed += OnEntityDestroyed;
             
             if (_healthProgressBar != null)
             {
@@ -65,7 +55,11 @@ namespace GameResources.Scripts.Facades
 
         public void OnDespawned()
         {
-            _damageableComponent.Reset();
+            if (_damageableComponent != null)
+            {
+                _damageableComponent.EntityDamaged -= OnEntityDamaged;
+                _damageableComponent.EntityDestroyed -= OnEntityDestroyed;
+            }
             _updateSubscription?.Dispose();
             _pool = null;
             
@@ -95,6 +89,7 @@ namespace GameResources.Scripts.Facades
 
         private void OnEntityDestroyed()
         {
+            _updateSubscription?.Dispose();
             _signalBus?.Fire(new EntityKilledSignal(EntityType, _config.ExperienceType, transform.position));
             ReturnToPool();
         }
