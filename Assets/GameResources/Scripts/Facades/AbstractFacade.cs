@@ -1,6 +1,7 @@
 namespace GameResources.Scripts.Facades
 {
-    using AttackSystem;
+    using System.Collections.Generic;
+    using AbilitySystem;
     using Data;
     using Data.Entities;
     using ExperienceSystem;
@@ -29,14 +30,19 @@ namespace GameResources.Scripts.Facades
         [SerializeField] protected GameObject _entityGameObject;
 
         protected AbstractMovementController _movementController;
-        protected AbstractAttackController _attackController;
         protected ExperienceController _experienceController;
+        protected List<Ability> _abilities = new();
         protected T _config;
 
         protected virtual void OnDestroy()
         {
             _movementController = null;
-            _attackController?.Dispose();
+            
+            foreach (var ability in _abilities)
+            {
+                ability?.Dispose();
+            }
+            _abilities.Clear();
         }
     }
 }

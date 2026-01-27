@@ -1,4 +1,4 @@
-﻿namespace GameResources.Scripts.Factories
+namespace GameResources.Scripts.Factories
 {
     using Data.Entities;
     using Facades;
@@ -12,13 +12,15 @@
     
     public class PlayerSpawnData
     {
-        public PlayerSpawnData(Transform targetTransform, PlayerConfig playerConfig)
+        public PlayerSpawnData(Transform targetTransform, PlayerConfig playerConfig, AbilitiesConfig abilitiesConfig)
         {
             TargetTransform = targetTransform;
             PlayerConfig = playerConfig;
+            AbilitiesConfig = abilitiesConfig;
         }
 
         public readonly Transform TargetTransform;
         public readonly PlayerConfig PlayerConfig;
+        public readonly AbilitiesConfig AbilitiesConfig;
     }
 }

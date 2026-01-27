@@ -5,6 +5,9 @@ namespace GameResources.Scripts.Data
         Player = 0,
         EnemyFast = 100,
         EnemySlow = 101,
-        CollectableSmallExperience = 1000
+        CollectableSmallExperience = 1000,
+        AuraAbility = 2000,
+        ProjectileAbility = 2001,
+        OrbitAbility = 2002
     }
 }

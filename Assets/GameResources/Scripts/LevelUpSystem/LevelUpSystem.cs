@@ -2,6 +2,9 @@ namespace GameResources.Scripts.LevelUpSystem
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Data.Entities;
+    using PauseSystem;
     using Signals;
     using UniRx;
     using Zenject;
@@ -20,6 +23,7 @@ namespace GameResources.Scripts.LevelUpSystem
         private readonly SignalBus _signalBus;
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         private List<int> _levelExperiences;
+        private RewardConfig _rewardConfig;
 
         private readonly ReactiveProperty<int> _currentLevel = new ReactiveProperty<int>(1);
         private readonly ReactiveProperty<int> _currentExperience = new ReactiveProperty<int>(0);
@@ -30,6 +34,15 @@ namespace GameResources.Scripts.LevelUpSystem
         public void Initialize()
         {
             _signalBus.Subscribe<ExperienceCollectedSignal>(OnExperienceCollected);
+            _signalBus.Subscribe<GameConfigLoadSignal>(OnGameConfigLoad);
+            
+            float progress = GetLevelProgress();
+            _signalBus.Fire(new ExperienceProgressChangedSignal(progress, _currentLevel.Value));
+        }
+
+        private void OnGameConfigLoad(GameConfigLoadSignal signal)
+        {
+            _rewardConfig = signal.GameConfigs.RewardConfig;
         }
 
         private void OnExperienceCollected(ExperienceCollectedSignal signal)
@@ -45,6 +58,8 @@ namespace GameResources.Scripts.LevelUpSystem
             {
                 _currentExperience.Value -= GetExperienceForLevel(_currentLevel.Value + 1);
                 _currentLevel.Value++;
+                
+                OnLevelUp(_currentLevel.Value);
             }
 
             if (_currentLevel.Value >= MAX_LEVEL)
@@ -54,6 +69,23 @@ namespace GameResources.Scripts.LevelUpSystem
 
             float progress = GetLevelProgress();
             _signalBus.Fire(new ExperienceProgressChangedSignal(progress, _currentLevel.Value));
+        }
+
+        private void OnLevelUp(int newLevel)
+        {
+            if (_rewardConfig == null || _rewardConfig.RewardDescriptions == null)
+            {
+                return;
+            }
+
+            RewardDescription rewardDescription = _rewardConfig.RewardDescriptions
+                .FirstOrDefault(r => r.PlayerLevel == newLevel);
+
+            if (rewardDescription != null && rewardDescription.EntityTypes != null && rewardDescription.EntityTypes.Count > 0)
+            {
+                _signalBus.Fire(new LevelUpSignal(rewardDescription));
+                ApplicationPauseSystem.Pause();
+            }
         }
 
         public int GetExperienceForLevel(int level)

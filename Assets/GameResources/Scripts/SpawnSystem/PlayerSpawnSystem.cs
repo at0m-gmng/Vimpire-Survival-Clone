@@ -1,4 +1,4 @@
-﻿namespace GameResources.Scripts.SpawnSystem
+namespace GameResources.Scripts.SpawnSystem
 {
     using Data.Entities;
     using Facades;
@@ -18,9 +18,9 @@
         private readonly PlayerFactory _playerFactory;
         private readonly SignalBus _signalBus;
 
-        public virtual void StartSystem(Transform playerSpawnPoint, PlayerConfig playerConfig)
+        public virtual void StartSystem(Transform playerSpawnPoint, PlayerConfig playerConfig, AbilitiesConfig abilitiesConfig)
         {
-            PlayerFacade facade = _playerFactory.Create(new PlayerSpawnData(playerSpawnPoint, playerConfig));
+            PlayerFacade facade = _playerFactory.Create(new PlayerSpawnData(playerSpawnPoint, playerConfig, abilitiesConfig));
             _signalBus.Fire(new PlayerCreatedSignal(facade.EntityTransform));
         }
     }

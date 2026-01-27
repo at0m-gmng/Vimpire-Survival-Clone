@@ -1,9 +1,10 @@
-﻿namespace GameResources.Scripts.EntryPoint
+namespace GameResources.Scripts.EntryPoint
 {
     using System.Collections.Generic;
     using Cysharp.Threading.Tasks;
     using Data;
     using SaveLoadSystem;
+    using Signals;
     using SpawnSystem;
     using UnityEngine;
     using Zenject;
@@ -39,7 +40,9 @@
                 _gameConfigs = gameConfigs;
             }
             
-            _playerSpawnSystem.StartSystem(transform, _gameConfigs.PlayerConfig);
+            _signalBus.Fire(new GameConfigLoadSignal(_gameConfigs));
+            
+            _playerSpawnSystem.StartSystem(transform, _gameConfigs.PlayerConfig, _gameConfigs.AbilitiesConfig);
             await UniTask.Delay(100);
             _enemySpawnSystem.StartSystem(GetTopFaceVertices(20), _gameConfigs.EnemiesConfig, 20, 0.15f);
             _collectablesSpawnSystem.StartSystem(_gameConfigs.CollectablesConfig);

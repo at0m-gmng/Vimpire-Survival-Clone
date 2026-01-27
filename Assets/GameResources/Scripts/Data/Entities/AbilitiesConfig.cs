@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using UnityEngine.Serialization;
 
     [Serializable]
     public class AbilitiesConfig
@@ -19,19 +20,8 @@
     [Serializable]
     public class AbilityConfig : EntityConfig
     {
-        public float BaseDamage = 1f;
-        public float BaseCooldown = 1f;
-    
-        public float BaseRadius = 3f;
-        public int BaseProjectileCount = 0;
-        public int BaseOrbitalCount = 0;
-        public float BaseRotationSpeed = 10;
-    
-        public float DamagePerLevel;
-        public float CooldownReductionPerLevel;
-        public float RadiusIncreasePerLevel;
-        public int ProjectileCountPerLevel;
-        public int OrbitalCountPerLevel;
-        public float RotationSpeedPerLevel;
+        public float Damage = 1f;
+        public float Cooldown = 1f;
+        public float Radius = 3f;
     }
 }

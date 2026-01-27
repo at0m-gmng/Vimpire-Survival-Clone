@@ -12,8 +12,8 @@
         "EntityType": "EnemyFast",
         "EnemyConfig": {
           "ExperienceType": "CollectableSmallExperience",
-          "MoveSpeed": 8.0,
-          "Health": 5.0
+          "MoveSpeed": 4.0,
+          "Health": 10.0
         }
       },
       {
@@ -34,6 +34,838 @@
           "Experience": 10.0,
           "CollectSpeed": 20.0
         }
+      }
+    ]
+  },
+  "AbilitiesConfig": {
+    "AbilitiesDescription": [
+      {
+        "EntityType": "AuraAbility",
+        "AbilityConfig": {
+          "Damage": 1.0,
+          "Cooldown": 1.0,
+          "Radius": 3.0
+        }
+      },
+      {
+        "EntityType": "ProjectileAbility",
+        "AbilityConfig": {
+          "Damage": 1.0,
+          "Cooldown": 1.0,
+          "Radius": 3.0
+        }
+      },
+      {
+        "EntityType": "OrbitAbility",
+        "AbilityConfig": {
+          "Damage": 1.0,
+          "Cooldown": 1.0,
+          "Radius": 3.0
+        }
+      }
+    ]
+  },
+  "RewardConfig": {
+    "RewardDescriptions": [
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 1
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 2
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 3
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 4
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 5
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 6
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 7
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 8
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 9
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 10
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 11
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 12
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 13
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 14
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 15
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 16
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 17
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 18
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 19
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 20
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 21
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 22
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 23
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 24
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 25
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 26
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 27
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 28
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 29
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 30
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 31
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 32
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 33
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 34
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 35
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 36
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 37
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 38
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 39
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 40
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 41
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 42
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 43
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 44
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 45
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 46
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 47
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 48
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 49
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 50
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 51
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 52
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 53
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 54
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 55
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 56
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 57
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 58
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 59
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 60
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 61
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 62
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 63
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 64
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 65
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 66
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 67
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 68
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 69
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 70
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 71
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 72
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 73
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 74
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 75
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 76
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 77
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 78
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 79
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 80
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 81
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 82
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 83
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 84
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 85
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 86
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 87
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 88
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 89
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 90
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 91
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 92
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 93
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 94
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 95
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 96
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 97
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 98
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 99
+      },
+      {
+        "EntityTypes": [
+          "AuraAbility",
+          "ProjectileAbility",
+          "OrbitAbility"
+        ],
+        "PlayerLevel": 100
       }
     ]
   }

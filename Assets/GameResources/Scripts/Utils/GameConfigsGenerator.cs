@@ -75,6 +75,8 @@ namespace GameResources.Scripts.Utils
 
             configs.EnemiesConfig = UpdateEnemiesConfig(configs.EnemiesConfig, settings);
             configs.CollectablesConfig = UpdateCollectablesConfig(configs.CollectablesConfig, settings);
+            configs.AbilitiesConfig = UpdateAbilitiesConfig(configs.AbilitiesConfig, settings);
+            configs.RewardConfig = UpdateRewardConfig(configs.RewardConfig, settings);
             
             return configs;
         }
@@ -159,6 +161,88 @@ namespace GameResources.Scripts.Utils
             }
             
             return collectablesConfig;
+        }
+
+        private static RewardConfig UpdateRewardConfig(RewardConfig rewardConfig, JsonSerializerSettings settings)
+        {
+            if (rewardConfig == null)
+                rewardConfig = new RewardConfig();
+                
+            if (rewardConfig.RewardDescriptions == null)
+                rewardConfig.RewardDescriptions = new List<RewardDescription>();
+
+            List<EntityType> allAbilityTypes = Enum.GetValues(typeof(EntityType))
+                .Cast<EntityType>()
+                .Where(et => !et.ToString().ToLower().Contains("enemy") 
+                          && !et.ToString().ToLower().Contains("collectable")
+                          && !et.ToString().ToLower().Contains("player"))
+                .ToList();
+
+            if (allAbilityTypes.Count == 0)
+            {
+                return rewardConfig;
+            }
+
+            for (int level = 2; level <= 100; level++)
+            {
+                if (!rewardConfig.RewardDescriptions.Any(r => r.PlayerLevel == level))
+                {
+                    rewardConfig.RewardDescriptions.Add(new RewardDescription
+                    {
+                        EntityTypes = new List<EntityType>(allAbilityTypes),
+                        PlayerLevel = level
+                    });
+                }
+            }
+
+            rewardConfig.RewardDescriptions = rewardConfig.RewardDescriptions
+                .OrderBy(r => r.PlayerLevel)
+                .ToList();
+            
+            return rewardConfig;
+        }
+
+        private static AbilitiesConfig UpdateAbilitiesConfig(AbilitiesConfig abilitiesConfig, JsonSerializerSettings settings)
+        {
+            if (abilitiesConfig == null)
+                abilitiesConfig = new AbilitiesConfig();
+                
+            if (abilitiesConfig.AbilitiesDescription == null)
+                abilitiesConfig.AbilitiesDescription = new List<AbilityDescription>();
+            
+            List<EntityType> existingAbilityTypes = abilitiesConfig.AbilitiesDescription
+                .Select(ad => ad.EntityType)
+                .ToList();
+            
+            List<EntityType> allAbilityTypes = Enum.GetValues(typeof(EntityType))
+                .Cast<EntityType>()
+                .Where(et => !et.ToString().ToLower().Contains("enemy") 
+                          && !et.ToString().ToLower().Contains("collectable")
+                          && !et.ToString().ToLower().Contains("player"))
+                .ToList();
+            
+            foreach (var abilityDesc in abilitiesConfig.AbilitiesDescription)
+            {
+                if (abilityDesc.AbilityConfig != null)
+                {
+                    string oldJson = JsonConvert.SerializeObject(abilityDesc.AbilityConfig, settings);
+                    abilityDesc.AbilityConfig = JsonConvert.DeserializeObject<AbilityConfig>(oldJson, settings);
+                }
+            }
+            
+            foreach (EntityType abilityType in allAbilityTypes)
+            {
+                if (!existingAbilityTypes.Contains(abilityType))
+                {
+                    abilitiesConfig.AbilitiesDescription.Add(new AbilityDescription
+                    {
+                        EntityType = abilityType,
+                        AbilityConfig = new AbilityConfig()
+                    });
+                }
+            }
+            
+            return abilitiesConfig;
         }
     }
 }

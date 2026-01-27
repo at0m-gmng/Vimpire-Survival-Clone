@@ -1,4 +1,4 @@
-﻿namespace GameResources.Scripts.Data.Entities
+namespace GameResources.Scripts.Data.Entities
 {
     using System;
 
