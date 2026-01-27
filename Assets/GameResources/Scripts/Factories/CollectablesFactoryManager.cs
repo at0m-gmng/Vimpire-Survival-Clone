@@ -6,7 +6,7 @@
     using Data;
     using Zenject;
 
-    public class CollectablesFactoryManager : ICollectableFactoryManager
+    public sealed class CollectablesFactoryManager : ICollectableFactoryManager
     {
         public CollectablesFactoryManager(DiContainer container, CollectablePrefabsConfig config)
         {

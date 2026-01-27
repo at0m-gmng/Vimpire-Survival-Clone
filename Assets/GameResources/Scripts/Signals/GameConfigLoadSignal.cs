@@ -1,12 +1,13 @@
 namespace GameResources.Scripts.Signals
 {
-    using Configs;
     using Data;
 
-    public class GameConfigLoadSignal
+    public sealed class GameConfigLoadSignal
     {
-        public GameConfigs GameConfigs { get; }
-
-        public GameConfigLoadSignal(GameConfigs gameConfigs) => GameConfigs = gameConfigs;
+        public GameConfigLoadSignal(GameConfigs gameConfigs)
+        {
+            GameConfigs = gameConfigs;
+        }
+        public readonly GameConfigs GameConfigs;
     }
 }

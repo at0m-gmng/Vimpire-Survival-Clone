@@ -1,12 +1,11 @@
 ﻿namespace GameResources.Scripts.Factories
 {
-    using Data;
     using Data.Entities;
     using Facades;
     using UnityEngine;
     using Zenject;
 
-    public class EnemyFactory : PlaceholderFactory<EnemySpawnData, EnemyFacade>
+    public sealed class EnemyFactory : PlaceholderFactory<EnemySpawnData, EnemyFacade>
     {
         
     }

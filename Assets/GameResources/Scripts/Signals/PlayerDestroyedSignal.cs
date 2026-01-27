@@ -1,6 +1,6 @@
 namespace GameResources.Scripts.Signals
 {
-    public class PlayerDestroyedSignal
+    public sealed class PlayerDestroyedSignal
     {
     }
 }

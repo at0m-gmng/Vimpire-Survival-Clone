@@ -6,7 +6,7 @@
     using Data;
     using Zenject;
 
-    public class ProjectileFactoryManager : IProjectileFactoryManager
+    public sealed class ProjectileFactoryManager : IProjectileFactoryManager
     {
         public ProjectileFactoryManager(DiContainer container, ProjectilePrefabsConfig config)
         {

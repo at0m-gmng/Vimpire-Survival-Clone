@@ -6,7 +6,7 @@
     using UnityEngine;
     using UniRx.Triggers;
 
-    public class ExperienceController : IDisposable
+    public sealed class ExperienceController : IDisposable
     {
         public ExperienceController(Collider initTriggerCollider, Collider collectTriggerCollider)
         {

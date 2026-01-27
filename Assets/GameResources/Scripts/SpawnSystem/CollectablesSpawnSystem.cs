@@ -1,14 +1,12 @@
 ﻿namespace GameResources.Scripts.SpawnSystem
 {
-    using System;
-    using System.Collections.Generic;
     using Data.Entities;
     using Factories;
     using Signals;
     using UnityEngine;
     using Zenject;
 
-    public class CollectablesSpawnSystem
+    public sealed class CollectablesSpawnSystem
     {
         public CollectablesSpawnSystem(SignalBus signalBus, ICollectableFactoryManager collectableFactory)
         {
@@ -18,7 +16,6 @@
             _signalBus.Subscribe<PlayerCreatedSignal>(OnPlayerCreated);
             _signalBus.Subscribe<EntityKilledSignal>(OnEntityKilled);
         }
-
         private readonly SignalBus _signalBus;
         private readonly ICollectableFactoryManager _collectableFactory;
 

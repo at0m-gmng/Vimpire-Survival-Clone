@@ -1,6 +1,6 @@
 namespace GameResources.Scripts.Signals
 {
-    public class ExperienceProgressChangedSignal
+    public sealed class ExperienceProgressChangedSignal
     {
         public ExperienceProgressChangedSignal(float progress, int level)
         {

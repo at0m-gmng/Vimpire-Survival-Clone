@@ -7,26 +7,24 @@ namespace GameResources.Scripts.AbilitySystem
     using UniRx.Triggers;
     using UnityEngine;
 
-    public class AuraDamageAbility : Ability
+    public sealed class AuraDamageAbility : Ability
     {
-        private readonly Collider _damageTrigger;
-        private readonly GameObject _attackEffect;
-        private readonly LayerMask _targetLayerMask;
-        
-        private readonly HashSet<Collider> _detectedEnemies = new();
-        private readonly CompositeDisposable _disposables = new();
-        
-        private float _currentDamage;
-        private float _currentRadius;
-        private float _damageInterval;
-        private bool _isInitialized;
-
         public AuraDamageAbility(Collider damageTrigger, GameObject attackEffect, LayerMask targetLayerMask)
         {
             _damageTrigger = damageTrigger;
             _attackEffect = attackEffect;
             _targetLayerMask = targetLayerMask;
         }
+        private readonly Collider _damageTrigger;
+        private readonly GameObject _attackEffect;
+        private readonly LayerMask _targetLayerMask;
+        
+        private readonly HashSet<Collider> _detectedEnemies = new();
+        private readonly CompositeDisposable _disposables = new();
+        private float _currentDamage;
+        private float _currentRadius;
+        private float _damageInterval;
+        private bool _isInitialized;
 
         protected override void OnInitialize()
         {

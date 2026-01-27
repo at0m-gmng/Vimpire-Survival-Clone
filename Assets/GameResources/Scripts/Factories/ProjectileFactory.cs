@@ -5,7 +5,7 @@
     using UnityEngine;
     using Zenject;
 
-    public class ProjectileFactory: PlaceholderFactory<ProjectileSpawnData, ProjectileFacade>
+    public sealed class ProjectileFactory: PlaceholderFactory<ProjectileSpawnData, ProjectileFacade>
     {
         
     }

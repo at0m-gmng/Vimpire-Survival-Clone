@@ -2,14 +2,13 @@ namespace GameResources.Scripts.UI.Views
 {
     using System.Collections.Generic;
     using Data;
-    using Data.Entities;
     using PauseSystem;
     using Signals;
     using UnityEngine;
     using UnityEngine.UI;
     using Zenject;
 
-    public class GameWindowView : MonoBehaviour
+    public sealed class GameWindowView : MonoBehaviour
     {
         [Inject]
         private void Construct(SignalBus signalBus)
@@ -86,10 +85,7 @@ namespace GameResources.Scripts.UI.Views
             _activeRewardCards.Add(card);
         }
 
-        private void OnRewardCardClicked(EntityType entityType)
-        {
-            _signalBus.Fire(new RewardSelectedSignal(entityType));
-        }
+        private void OnRewardCardClicked(EntityType entityType) => _signalBus.Fire(new RewardSelectedSignal(entityType));
 
         private void OnRewardSelected(RewardSelectedSignal signal)
         {

@@ -26,11 +26,6 @@ namespace GameResources.Scripts.Facades
         private IInputSystem _inputSystem;
         private IProjectileFactoryManager _projectileFactoryManager;
 
-        private IDisposable _updateSubscription;
-        private IMemoryPool _pool;
-        private Transform _poolParent;
-        private AbilitiesConfig _abilitiesConfig;
-
         [SerializeField] private LayerMask _targetMask;
         [SerializeField] private GameObject _damageEffect;
         [SerializeField] private Collider _initializeCollectTrigger;
@@ -38,6 +33,11 @@ namespace GameResources.Scripts.Facades
         [SerializeField] private Collider _auraDamageTrigger;
         [SerializeField] private GameObject _auraEffect;
         [SerializeField] private Collider _projectileAbilityTrigger;
+        
+        private IDisposable _updateSubscription;
+        private IMemoryPool _pool;
+        private Transform _poolParent;
+        private AbilitiesConfig _abilitiesConfig;
 
         #region POOL
 

@@ -5,7 +5,7 @@
     using UnityEngine;
     using Zenject;
 
-    public class CollectablesFactory : PlaceholderFactory<CollectableSpawnData, CollectablesFacade>
+    public sealed class CollectablesFactory : PlaceholderFactory<CollectableSpawnData, CollectablesFacade>
     {
         
     }

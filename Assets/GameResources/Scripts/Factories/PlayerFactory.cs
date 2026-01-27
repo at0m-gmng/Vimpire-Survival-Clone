@@ -5,7 +5,7 @@ namespace GameResources.Scripts.Factories
     using UnityEngine;
     using Zenject;
 
-    public class PlayerFactory : PlaceholderFactory<PlayerSpawnData, PlayerFacade>
+    public sealed class PlayerFactory : PlaceholderFactory<PlayerSpawnData, PlayerFacade>
     {
         
     }

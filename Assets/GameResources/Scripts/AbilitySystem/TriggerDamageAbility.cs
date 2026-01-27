@@ -6,7 +6,7 @@
     using UniRx.Triggers;
     using UnityEngine;
 
-    public class TriggerDamageAbility : Ability
+    public sealed class TriggerDamageAbility : Ability
     {
         public TriggerDamageAbility(Collider triggerCollider, LayerMask targetLayerMask)
         {

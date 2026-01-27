@@ -9,7 +9,7 @@
     using UnityEngine;
     using Zenject;
 
-    public class CollectablesFacade : AbstractFacade<CollectableConfig>, ICollectable,
+    public sealed class CollectablesFacade : AbstractFacade<CollectableConfig>, ICollectable,
         IPoolable<CollectableSpawnData, IMemoryPool>
     {
         private IDisposable _updateSubscription = null;

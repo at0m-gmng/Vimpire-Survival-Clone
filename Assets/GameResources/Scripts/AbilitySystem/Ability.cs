@@ -9,8 +9,7 @@ namespace GameResources.Scripts.AbilitySystem
     {
         protected AbilityConfig Config => _configDescription.AbilityConfig;
         protected AbilityDescription _configDescription;
-
-        protected IDisposable UpdateSubscription;
+        protected IDisposable _updateSubscription;
 
         public void Initialize(AbilityDescription config)
         {
@@ -20,10 +19,10 @@ namespace GameResources.Scripts.AbilitySystem
 
         protected void StartUpdate()
         {
-            UpdateSubscription?.Dispose();
-            if (UpdateSubscription == null)
+            _updateSubscription?.Dispose();
+            if (_updateSubscription == null)
             {
-                UpdateSubscription = Observable.EveryUpdate()
+                _updateSubscription = Observable.EveryUpdate()
                     .Subscribe(_ => OnUpdate(Time.deltaTime));
             }
         }
@@ -31,6 +30,6 @@ namespace GameResources.Scripts.AbilitySystem
         protected virtual void OnInitialize() { }
         protected virtual void OnUpdate(float deltaTime) { }
     
-        public virtual void Dispose() => UpdateSubscription?.Dispose();
+        public virtual void Dispose() => _updateSubscription?.Dispose();
     }
 }

@@ -2,13 +2,12 @@ namespace GameResources.Scripts.Signals
 {
     using Data;
 
-    public class RewardSelectedSignal
+    public sealed class RewardSelectedSignal
     {
-        public readonly EntityType SelectedEntityType;
-
         public RewardSelectedSignal(EntityType selectedEntityType)
         {
             SelectedEntityType = selectedEntityType;
         }
+        public readonly EntityType SelectedEntityType;
     }
 }

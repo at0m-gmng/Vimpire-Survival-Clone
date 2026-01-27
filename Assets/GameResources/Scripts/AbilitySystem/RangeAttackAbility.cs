@@ -5,8 +5,14 @@ namespace GameResources.Scripts.AbilitySystem
     using UniRx;
     using UnityEngine;
 
-    public class RangeAttackAbility : Ability
+    public sealed class RangeAttackAbility : Ability
     {
+        public RangeAttackAbility(Transform playerTransform, GameObject attackEffect, LayerMask targetMask)
+        {
+            _playerTransform = playerTransform;
+            _attackEffect = attackEffect;
+            _targetMask = targetMask;
+        }
         private readonly Transform _playerTransform;
         private readonly GameObject _attackEffect;
         private readonly LayerMask _targetMask;
@@ -15,16 +21,8 @@ namespace GameResources.Scripts.AbilitySystem
         private int _attackDamage;
         private float _attackCooldown;
         private float _lastAttackTime;
-        
         private IDisposable _attackSubscription;
         private IDisposable _effectTimer;
-
-        public RangeAttackAbility(Transform playerTransform, GameObject attackEffect, LayerMask targetMask)
-        {
-            _playerTransform = playerTransform;
-            _attackEffect = attackEffect;
-            _targetMask = targetMask;
-        }
 
         protected override void OnInitialize()
         {

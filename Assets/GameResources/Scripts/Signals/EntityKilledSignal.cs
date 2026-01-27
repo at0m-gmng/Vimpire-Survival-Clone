@@ -3,7 +3,7 @@ namespace GameResources.Scripts.Signals
     using Data;
     using UnityEngine;
 
-    public class EntityKilledSignal
+    public sealed class EntityKilledSignal
     {
         public EntityKilledSignal(EntityType entityType, EntityType rewardType, Vector3 position)
         {

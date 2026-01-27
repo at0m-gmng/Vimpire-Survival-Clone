@@ -6,7 +6,7 @@ namespace GameResources.Scripts.MovementSystem
     using UniRx;
     using UnityEngine;
 
-    public class PlayerMovementController : AbstractMovementController, IDisposable
+    public sealed class PlayerMovementController : AbstractMovementController, IDisposable
     {
         public PlayerMovementController(Transform transform, PlayerConfig playerConfig, IInputSystem inputSystem)
         {
@@ -16,6 +16,7 @@ namespace GameResources.Scripts.MovementSystem
         }
         private readonly Transform _transform;
         private readonly PlayerConfig _playerConfig;
+        
         private Vector2 _movementInput;
         private readonly CompositeDisposable _disposables = new();
 

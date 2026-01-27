@@ -2,7 +2,7 @@ namespace GameResources.Scripts.UI
 {
     using UnityEngine;
 
-    public class HealthProgressBar : MonoBehaviour
+    public sealed class HealthProgressBar : MonoBehaviour
     {
         [SerializeField] private RectTransform _fillTransform;
 

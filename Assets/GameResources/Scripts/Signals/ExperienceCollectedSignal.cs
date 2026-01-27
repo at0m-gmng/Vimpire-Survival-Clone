@@ -1,6 +1,6 @@
 ﻿namespace GameResources.Scripts.Signals
 {
-    public class ExperienceCollectedSignal
+    public sealed class ExperienceCollectedSignal
     {
         public ExperienceCollectedSignal(float experience)
         {

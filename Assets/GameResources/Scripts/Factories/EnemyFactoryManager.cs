@@ -6,7 +6,7 @@
     using Data;
     using Zenject;
 
-    public class EnemyEnemyFactoryManager : IEnemyFactoryManager
+    public sealed class EnemyEnemyFactoryManager : IEnemyFactoryManager
     {
         public EnemyEnemyFactoryManager(DiContainer container, EnemyPrefabsConfig config)
         {

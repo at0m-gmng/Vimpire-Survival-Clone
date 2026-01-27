@@ -9,7 +9,7 @@ namespace GameResources.Scripts.Facades
     using UnityEngine;
     using Zenject;
 
-    public class ProjectileFacade : AbstractFacade<EntityConfig>, IPoolable<ProjectileSpawnData, IMemoryPool>
+    public sealed class ProjectileFacade : AbstractFacade<EntityConfig>, IPoolable<ProjectileSpawnData, IMemoryPool>
     {
         private const float DEFAULT_LIFETIME = 5f;
         

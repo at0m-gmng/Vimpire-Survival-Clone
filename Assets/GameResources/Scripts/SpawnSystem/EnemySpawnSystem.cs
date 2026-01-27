@@ -10,7 +10,7 @@ namespace GameResources.Scripts.SpawnSystem
     using Zenject;
     using Random = UnityEngine.Random;
 
-    public class EnemySpawnSystem : IDisposable
+    public sealed class EnemySpawnSystem : IDisposable
     {
         public EnemySpawnSystem(SignalBus signalBus, IEnemyFactoryManager enemyEnemyFactory)
         {
@@ -49,7 +49,6 @@ namespace GameResources.Scripts.SpawnSystem
             if (signal.EntityType.ToString().Contains(ENEMY_ENTITY) && _currentEnemyCount > 0)
             {
                 _currentEnemyCount--;
-                // TrySpawnEnemy();
             }
         }
 
@@ -65,23 +64,22 @@ namespace GameResources.Scripts.SpawnSystem
         {
             if (_currentEnemyCount < _maxEnemies && _playerTarget != null && _spawnPoints.Count != 0)
             {
-                if (_enemiesConfig == null || _enemiesConfig.EnemiesDescription == null || _enemiesConfig.EnemiesDescription.Count == 0)
+                if (_enemiesConfig != null && _enemiesConfig.EnemiesDescription != null &&
+                    _enemiesConfig.EnemiesDescription.Count != 0)
                 {
-                    Debug.LogWarning("EnemiesConfig or EnemiesDescription is empty. Cannot spawn enemies.");
-                    return;
-                }
-                
-                Vector3 randomSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
-                EnemyDescription enemyDescription = _enemiesConfig.EnemiesDescription[Random.Range(0, _enemiesConfig.EnemiesDescription.Count)];
-                
-                _enemyEnemyFactory.GetFactory(enemyDescription.EntityType).Create(new EnemySpawnData
-                (
-                    randomSpawnPoint,
-                    _playerTarget,
-                    enemyDescription
-                ));
+                    Vector3 randomSpawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
+                    EnemyDescription enemyDescription =
+                        _enemiesConfig.EnemiesDescription[Random.Range(0, _enemiesConfig.EnemiesDescription.Count)];
 
-                _currentEnemyCount++;
+                    _enemyEnemyFactory.GetFactory(enemyDescription.EntityType).Create(new EnemySpawnData
+                    (
+                        randomSpawnPoint,
+                        _playerTarget,
+                        enemyDescription
+                    ));
+
+                    _currentEnemyCount++;
+                }
             }
         }
 

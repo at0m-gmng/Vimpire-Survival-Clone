@@ -11,7 +11,7 @@ namespace GameResources.Scripts.Facades
     using UnityEngine;
     using Zenject;
 
-    public class EnemyFacade : AbstractFacade<EnemyConfig>,
+    public sealed class EnemyFacade : AbstractFacade<EnemyConfig>,
         IPoolable<EnemySpawnData, IMemoryPool>
     {
         [SerializeField] private EnemyHealthController _damageableComponent = default;

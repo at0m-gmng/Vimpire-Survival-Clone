@@ -7,18 +7,17 @@ namespace GameResources.Scripts.SpawnSystem
     using UnityEngine;
     using Zenject;
 
-    public class PlayerSpawnSystem 
+    public sealed class PlayerSpawnSystem 
     {
         public PlayerSpawnSystem(SignalBus signalBus, PlayerFactory playerFactory)
         {
             _playerFactory = playerFactory;
             _signalBus = signalBus;
         }
-        
         private readonly PlayerFactory _playerFactory;
         private readonly SignalBus _signalBus;
 
-        public virtual void StartSystem(Transform playerSpawnPoint, PlayerConfig playerConfig, AbilitiesConfig abilitiesConfig)
+        public void StartSystem(Transform playerSpawnPoint, PlayerConfig playerConfig, AbilitiesConfig abilitiesConfig)
         {
             PlayerFacade facade = _playerFactory.Create(new PlayerSpawnData(playerSpawnPoint, playerConfig, abilitiesConfig));
             _signalBus.Fire(new PlayerCreatedSignal(facade.EntityTransform));

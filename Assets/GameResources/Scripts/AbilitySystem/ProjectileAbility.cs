@@ -7,7 +7,7 @@ namespace GameResources.Scripts.AbilitySystem
     using UniRx.Triggers;
     using UnityEngine;
 
-    public class ProjectileAbility : Ability
+    public sealed class ProjectileAbility : Ability
     {
         public ProjectileAbility(IProjectileFactoryManager projectileFactoryManager, Collider detectionTrigger, Transform shootingPoint)
         {
@@ -15,7 +15,6 @@ namespace GameResources.Scripts.AbilitySystem
             _detectionTrigger = detectionTrigger;
             _shootingPoint = shootingPoint;
         }
-
         private IProjectileFactoryManager _projectileFactoryManager;
         private Collider _detectionTrigger;
         private Transform _shootingPoint;
@@ -41,14 +40,8 @@ namespace GameResources.Scripts.AbilitySystem
                     .Subscribe(OnTargetEnter)
                     .AddTo(_disposables);
 
-                Debug.Log($"[ProjectileAbility] First initialization. Cooldown: {Config.Cooldown}, Damage: {Config.Damage}, Radius: {Config.Radius}, Trigger: {_detectionTrigger.name}, TriggerGameObject Active: {_detectionTrigger.gameObject.activeInHierarchy}");
-                
                 _isInitialized = true;
                 StartUpdate();
-            }
-            else
-            {
-                Debug.Log($"[ProjectileAbility] Upgrade! New Cooldown: {Config.Cooldown}, Damage: {Config.Damage}, Radius: {Config.Radius}");
             }
 
             _detectionTrigger.transform.localScale = Vector3.one * Config.Radius;
@@ -56,35 +49,21 @@ namespace GameResources.Scripts.AbilitySystem
 
         private void OnTargetEnter(Collider other)
         {
-            Debug.Log($"[ProjectileAbility] OnTriggerEnter called! Collider: {other.name}, Layer: {LayerMask.LayerToName(other.gameObject.layer)}");
-            
             IDamageable damageable = other.GetComponent<IDamageable>();
             if (damageable != null)
             {
                 _detectedTargets.Add(other);
-                Debug.Log($"[ProjectileAbility] Target detected: {other.name}, Total targets: {_detectedTargets.Count}");
-            }
-            else
-            {
-                Debug.LogWarning($"[ProjectileAbility] Collider {other.name} has no IDamageable component");
             }
         }
         
         private void TryShoot()
         {
-            Debug.Log($"[ProjectileAbility] TryShoot called. Detected targets: {_detectedTargets.Count}");
-            
             if (_detectedTargets.Count > 0)
             {
                 Transform nearest = GetNearestTarget();
                 if (nearest != null)
                 {
-                    Debug.Log($"[ProjectileAbility] Shooting at: {nearest.name}");
                     ShootAt(nearest);
-                }
-                else
-                {
-                    Debug.LogWarning("[ProjectileAbility] No valid nearest target found");
                 }
             }
 
@@ -92,7 +71,6 @@ namespace GameResources.Scripts.AbilitySystem
             _detectionTrigger.enabled = false;
             _isDetecting = false;
             _currentCooldown = Config.Cooldown;
-            Debug.Log($"[ProjectileAbility] Reset. Next shot in {_currentCooldown}s");
         }
 
         private Transform GetNearestTarget()
@@ -116,7 +94,6 @@ namespace GameResources.Scripts.AbilitySystem
 
         private void ShootAt(Transform target)
         {
-            Debug.Log($"[ProjectileAbility] Creating projectile at {_shootingPoint.position} targeting {target.position}");
             _projectileFactoryManager.GetFactory(_configDescription.EntityType).Create(new ProjectileSpawnData
             (
                 _shootingPoint.position,
@@ -131,7 +108,6 @@ namespace GameResources.Scripts.AbilitySystem
         
             if (_currentCooldown <= 0 && !_isDetecting)
             {
-                Debug.Log($"[ProjectileAbility] Cooldown ready! Enabling detection trigger. Trigger enabled: {_detectionTrigger.enabled}, GameObject active: {_detectionTrigger.gameObject.activeInHierarchy}");
                 _isDetecting = true;
                 _detectionTrigger.enabled = true;
             

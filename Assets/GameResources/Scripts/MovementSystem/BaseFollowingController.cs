@@ -26,15 +26,14 @@
 
     public class FollowingData
     {
-        public Transform Transform;
-        public Transform TargetTransform;
-        public float Speed;
-
         public FollowingData(Transform transform, Transform targetTransform, float speed)
         {
             Transform = transform;
             TargetTransform = targetTransform;
             Speed = speed;
         }
+        public readonly Transform Transform;
+        public readonly Transform TargetTransform;
+        public readonly float Speed;
     }
 }
