@@ -87,8 +87,8 @@ namespace GameResources.Scripts.Facades
                 {
                     existingAbility = CreateAbility(entityType);
                     _abilities.Add(existingAbility);
-
                 }
+                
                 existingAbility.Initialize(abilityDescription);
             }
         }
@@ -101,6 +101,8 @@ namespace GameResources.Scripts.Facades
                     return _abilities.OfType<AuraDamageAbility>().FirstOrDefault();
                 case EntityType.ProjectileAbility:
                     return _abilities.OfType<ProjectileAbility>().FirstOrDefault();
+                case EntityType.OrbitAbility:
+                    return _abilities.OfType<OrbitProjectileAbility>().FirstOrDefault();
                 default:
                     return null;
             }
@@ -114,6 +116,8 @@ namespace GameResources.Scripts.Facades
                     return new AuraDamageAbility(_auraDamageTrigger, _auraEffect, _targetMask);
                 case EntityType.ProjectileAbility:
                     return new ProjectileAbility(_projectileFactoryManager, _projectileAbilityTrigger, EntityTransform);
+                case EntityType.OrbitAbility:
+                    return new OrbitProjectileAbility(_projectileFactoryManager, EntityTransform);
                 default:
                     return null;
             }

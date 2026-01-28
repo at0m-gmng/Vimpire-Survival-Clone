@@ -1,6 +1,7 @@
 namespace GameResources.Scripts.AbilitySystem
 {
     using System.Collections.Generic;
+    using Data.Entities;
     using Factories;
     using HealthSystem;
     using UniRx;
@@ -9,7 +10,8 @@ namespace GameResources.Scripts.AbilitySystem
 
     public sealed class ProjectileAbility : Ability
     {
-        public ProjectileAbility(IProjectileFactoryManager projectileFactoryManager, Collider detectionTrigger, Transform shootingPoint)
+        public ProjectileAbility(IProjectileFactoryManager projectileFactoryManager, Collider detectionTrigger, 
+            Transform shootingPoint)
         {
             _projectileFactoryManager = projectileFactoryManager;
             _detectionTrigger = detectionTrigger;
@@ -21,6 +23,9 @@ namespace GameResources.Scripts.AbilitySystem
         
         private CompositeDisposable _disposables;
         private float _currentCooldown;
+        private float _currentCooldownInterval;
+        private float _currentDamage;
+        private int _currentEntitiesCount;
         private bool _isDetecting;
         private bool _isInitialized;
         private readonly HashSet<Collider> _detectedTargets = new();
@@ -31,6 +36,9 @@ namespace GameResources.Scripts.AbilitySystem
             {
                 _disposables = new CompositeDisposable();
                 _currentCooldown = 0f;
+                _currentCooldownInterval = Config.Cooldown;
+                _currentDamage = Config.Damage;
+                _currentEntitiesCount = Mathf.Max(1, Config.EntitiesCount);
                 _isDetecting = false;
 
                 _detectionTrigger.enabled = false;
@@ -43,7 +51,14 @@ namespace GameResources.Scripts.AbilitySystem
                 _isInitialized = true;
                 StartUpdate();
             }
+            else
+            {
+                _currentDamage += Config.Damage;
+                _currentEntitiesCount += Config.EntitiesCount;
+                _currentCooldownInterval *= 0.9f;
+            }
 
+            _detectionTrigger.gameObject.SetActive(true);
             _detectionTrigger.transform.localScale = Vector3.one * Config.Radius;
         }
 
@@ -60,45 +75,65 @@ namespace GameResources.Scripts.AbilitySystem
         {
             if (_detectedTargets.Count > 0)
             {
-                Transform nearest = GetNearestTarget();
-                if (nearest != null)
+                List<Transform> targets = GetPrioritizedTargets(_currentEntitiesCount);
+                foreach (Transform target in targets)
                 {
-                    ShootAt(nearest);
+                    if (target != null)
+                    {
+                        ShootAt(target);
+                    }
                 }
             }
 
             _detectedTargets.Clear();
             _detectionTrigger.enabled = false;
             _isDetecting = false;
-            _currentCooldown = Config.Cooldown;
         }
 
-        private Transform GetNearestTarget()
+        private List<Transform> GetPrioritizedTargets(int count)
         {
-            Transform nearest = null;
-            float minDistance = float.MaxValue;
+            List<Transform> result = new List<Transform>();
+            List<(Collider collider, float distance)> sortedTargets = new List<(Collider, float)>();
         
             foreach (Collider target in _detectedTargets)
             {
                 if (target == null) continue;
             
                 float distance = Vector3.Distance(_shootingPoint.position, target.transform.position);
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    nearest = target.transform;
-                }
+                sortedTargets.Add((target, distance));
             }
-            return nearest;
+
+            sortedTargets.Sort((a, b) => a.distance.CompareTo(b.distance));
+
+            int targetCount = Mathf.Min(count, sortedTargets.Count);
+            for (int i = 0; i < targetCount; i++)
+            {
+                result.Add(sortedTargets[i].collider.transform);
+            }
+
+            return result;
         }
 
         private void ShootAt(Transform target)
         {
+            AbilityDescription projectileConfig = new AbilityDescription
+            {
+                EntityType = _configDescription.EntityType,
+                AbilityConfig = new AbilityConfig
+                {
+                    Damage = _currentDamage,
+                    Cooldown = Config.Cooldown,
+                    Radius = Config.Radius,
+                    Speed = Config.Speed,
+                    EntitiesCount = Config.EntitiesCount
+                }
+            };
+
             _projectileFactoryManager.GetFactory(_configDescription.EntityType).Create(new ProjectileSpawnData
             (
                 _shootingPoint.position,
                 target,
-                _configDescription
+                projectileConfig
             ));
         }
 
@@ -112,7 +147,11 @@ namespace GameResources.Scripts.AbilitySystem
                 _detectionTrigger.enabled = true;
             
                 Observable.TimerFrame(2)
-                    .Subscribe(_ => TryShoot())
+                    .Subscribe(_ =>
+                    {
+                        TryShoot();
+                        _currentCooldown = _currentCooldownInterval;
+                    })
                     .AddTo(_disposables);
             }
         }

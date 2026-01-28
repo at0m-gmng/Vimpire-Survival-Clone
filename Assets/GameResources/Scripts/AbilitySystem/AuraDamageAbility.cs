@@ -71,6 +71,7 @@ namespace GameResources.Scripts.AbilitySystem
             {
                 _currentDamage += Config.Damage;
                 _currentRadius += Config.Radius;
+                _damageInterval *= 0.9f;
             }
 
             _attackEffect.transform.localScale = Vector3.one * _currentRadius;
