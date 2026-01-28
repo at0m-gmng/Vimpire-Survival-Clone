@@ -29,6 +29,10 @@ namespace GameResources.Scripts.AbilitySystem
         private bool _isDetecting;
         private bool _isInitialized;
         private readonly HashSet<Collider> _detectedTargets = new();
+        private readonly List<Transform> _targetList = new();
+        private readonly List<(Collider collider, float distance)> _sortedTargets = new();
+        
+        private static readonly DistanceComparer _distanceComparer = new();
 
         protected override void OnInitialize()
         {
@@ -75,8 +79,8 @@ namespace GameResources.Scripts.AbilitySystem
         {
             if (_detectedTargets.Count > 0)
             {
-                List<Transform> targets = GetPrioritizedTargets(_currentEntitiesCount);
-                foreach (Transform target in targets)
+                GetPrioritizedTargets(_currentEntitiesCount);
+                foreach (Transform target in _targetList)
                 {
                     if (target != null)
                     {
@@ -90,28 +94,26 @@ namespace GameResources.Scripts.AbilitySystem
             _isDetecting = false;
         }
 
-        private List<Transform> GetPrioritizedTargets(int count)
+        private void GetPrioritizedTargets(int count)
         {
-            List<Transform> result = new List<Transform>();
-            List<(Collider collider, float distance)> sortedTargets = new List<(Collider, float)>();
+            _targetList.Clear();
+            _sortedTargets.Clear();
         
             foreach (Collider target in _detectedTargets)
             {
                 if (target == null) continue;
             
                 float distance = Vector3.Distance(_shootingPoint.position, target.transform.position);
-                sortedTargets.Add((target, distance));
+                _sortedTargets.Add((target, distance));
             }
 
-            sortedTargets.Sort((a, b) => a.distance.CompareTo(b.distance));
+            _sortedTargets.Sort(_distanceComparer);
 
-            int targetCount = Mathf.Min(count, sortedTargets.Count);
+            int targetCount = Mathf.Min(count, _sortedTargets.Count);
             for (int i = 0; i < targetCount; i++)
             {
-                result.Add(sortedTargets[i].collider.transform);
+                _targetList.Add(_sortedTargets[i].collider.transform);
             }
-
-            return result;
         }
 
         private void ShootAt(Transform target)
@@ -161,5 +163,16 @@ namespace GameResources.Scripts.AbilitySystem
             base.Dispose();
             _disposables?.Dispose();
             _detectedTargets.Clear();
+            _targetList.Clear();
+            _sortedTargets.Clear();
         }
-    }}
+        
+        private class DistanceComparer : IComparer<(Collider collider, float distance)>
+        {
+            public int Compare((Collider collider, float distance) a, (Collider collider, float distance) b)
+            {
+                return a.distance.CompareTo(b.distance);
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 namespace GameResources.Scripts.Facades
 {
     using System;
-    using System.Linq;
+    using System.Collections.Generic;
     using AbilitySystem;
     using Data;
     using Data.Entities;
@@ -38,6 +38,8 @@ namespace GameResources.Scripts.Facades
         private IMemoryPool _pool;
         private Transform _poolParent;
         private AbilitiesConfig _abilitiesConfig;
+        private Dictionary<EntityType, AbilityDescription> _abilityDescriptionsCache;
+        private Dictionary<EntityType, Ability> _activeAbilities;
 
         #region POOL
 
@@ -51,6 +53,14 @@ namespace GameResources.Scripts.Facades
             _movementController = new PlayerMovementController(EntityTransform, _config, _inputSystem);
             _experienceController = new ExperienceController(_initializeCollectTrigger,_collectTrigger);
 
+            _abilityDescriptionsCache = new Dictionary<EntityType, AbilityDescription>();
+            _activeAbilities = new Dictionary<EntityType, Ability>();
+            
+            foreach (AbilityDescription desc in _abilitiesConfig.AbilitiesDescription)
+            {
+                _abilityDescriptionsCache[desc.EntityType] = desc;
+            }
+
             CreateRangeAttackAbility();
 
             _experienceController?.Start();
@@ -58,11 +68,10 @@ namespace GameResources.Scripts.Facades
             _signalBus.Subscribe<RewardSelectedSignal>(OnRewardSelected);
 
             _updateSubscription = Observable.EveryUpdate()
-                .Subscribe(_ =>
-                {
-                    _movementController?.UpdateMovement();
-                });
+                .Subscribe(_ => UpdateMovement());
         }
+
+        private void UpdateMovement() => _movementController?.UpdateMovement();
 
         private void CreateRangeAttackAbility()
         {
@@ -76,35 +85,24 @@ namespace GameResources.Scripts.Facades
 
         private void CreateOrUpgradeAbility(EntityType entityType)
         {
-            AbilityDescription abilityDescription = _abilitiesConfig.AbilitiesDescription
-                .FirstOrDefault(desc => desc.EntityType == entityType);
-
-            if (abilityDescription != null)
+            if (!_abilityDescriptionsCache.TryGetValue(entityType, out AbilityDescription abilityDescription))
             {
-                Ability existingAbility = FindAbilityByEntityType(entityType);
-
-                if (existingAbility == null)
-                {
-                    existingAbility = CreateAbility(entityType);
-                    _abilities.Add(existingAbility);
-                }
-                
-                existingAbility.Initialize(abilityDescription);
+                return;
             }
-        }
 
-        private Ability FindAbilityByEntityType(EntityType entityType)
-        {
-            switch (entityType)
+            if (!_activeAbilities.TryGetValue(entityType, out Ability existingAbility))
             {
-                case EntityType.AuraAbility:
-                    return _abilities.OfType<AuraDamageAbility>().FirstOrDefault();
-                case EntityType.ProjectileAbility:
-                    return _abilities.OfType<ProjectileAbility>().FirstOrDefault();
-                case EntityType.OrbitAbility:
-                    return _abilities.OfType<OrbitProjectileAbility>().FirstOrDefault();
-                default:
-                    return null;
+                existingAbility = CreateAbility(entityType);
+                if (existingAbility != null)
+                {
+                    _abilities.Add(existingAbility);
+                    _activeAbilities[entityType] = existingAbility;
+                }
+            }
+
+            if (existingAbility != null)
+            {
+                existingAbility.Initialize(abilityDescription);
             }
         }
 
@@ -136,6 +134,8 @@ namespace GameResources.Scripts.Facades
                 ability?.Dispose();
             }
             _abilities.Clear();
+            _activeAbilities?.Clear();
+            _abilityDescriptionsCache?.Clear();
         }
 
         public void ReturnToPool()

@@ -22,6 +22,7 @@ namespace GameResources.Scripts.AbilitySystem
         private float _currentCooldown;
         private bool _isInitialized;
         private int _targetProjectileCount;
+        private int _activeProjectileCount;
         private float _currentDamage;
         private float _currentSpeed;
 
@@ -33,6 +34,7 @@ namespace GameResources.Scripts.AbilitySystem
                 _currentAngle = 0f;
                 _isInitialized = true;
                 _targetProjectileCount = Config.EntitiesCount;
+                _activeProjectileCount = 0;
                 _currentDamage = Config.Damage;
                 _currentSpeed = Config.Speed;
                 CreateMissingProjectiles();
@@ -52,27 +54,24 @@ namespace GameResources.Scripts.AbilitySystem
         {
             _currentCooldown -= deltaTime;
 
-            if (_currentCooldown <= 0)
+            if (_currentCooldown <= 0 && _activeProjectileCount < _targetProjectileCount)
             {
-                int currentCount = CountActiveProjectiles();
-                
-                if (currentCount < _targetProjectileCount)
-                {
-                    CreateProjectile();
-                }
-                
+                CreateProjectile();
                 _currentCooldown = Config.Cooldown;
             }
 
-            _activeProjectiles.RemoveAll(p => p == null || !p.gameObject.activeInHierarchy);
-
             _currentAngle += _currentSpeed * deltaTime;
 
-            for (int i = 0; i < _activeProjectiles.Count; i++)
+            for (int i = _activeProjectiles.Count - 1; i >= 0; i--)
             {
-                if (_activeProjectiles[i] != null && _activeProjectiles[i].gameObject.activeInHierarchy)
+                if (_activeProjectiles[i] == null || !_activeProjectiles[i].gameObject.activeInHierarchy)
                 {
-                    float angleStep = 360f / _activeProjectiles.Count;
+                    _activeProjectiles.RemoveAt(i);
+                    _activeProjectileCount--;
+                }
+                else
+                {
+                    float angleStep = 360f / _activeProjectileCount;
                     float angle = _currentAngle + (i * angleStep);
 
                     Vector3 offset = new Vector3(
@@ -85,19 +84,6 @@ namespace GameResources.Scripts.AbilitySystem
                     _activeProjectiles[i].SetPosition(targetPosition);
                 }
             }
-        }
-
-        private int CountActiveProjectiles()
-        {
-            int count = 0;
-            foreach (ProjectileFacade projectile in _activeProjectiles)
-            {
-                if (projectile != null && projectile.gameObject.activeInHierarchy)
-                {
-                    count++;
-                }
-            }
-            return count;
         }
 
         private void CreateProjectile()
@@ -123,12 +109,12 @@ namespace GameResources.Scripts.AbilitySystem
             ));
 
             _activeProjectiles.Add(projectile);
+            _activeProjectileCount++;
         }
 
         private void CreateMissingProjectiles()
         {
-            int currentCount = CountActiveProjectiles();
-            int missingCount = _targetProjectileCount - currentCount;
+            int missingCount = _targetProjectileCount - _activeProjectileCount;
             
             if (missingCount <= 0)
             {
@@ -154,6 +140,7 @@ namespace GameResources.Scripts.AbilitySystem
             }
 
             _activeProjectiles.Clear();
+            _activeProjectileCount = 0;
         }
     }
 }

@@ -7,6 +7,8 @@ namespace GameResources.Scripts.AbilitySystem
 
     public sealed class RangeAttackAbility : Ability
     {
+        private const int MAX_TARGETS = 50;
+        
         public RangeAttackAbility(Transform playerTransform, GameObject attackEffect, LayerMask targetMask)
         {
             _playerTransform = playerTransform;
@@ -20,29 +22,36 @@ namespace GameResources.Scripts.AbilitySystem
         private float _attackRange;
         private int _attackDamage;
         private float _attackCooldown;
-        private float _lastAttackTime;
-        private IDisposable _attackSubscription;
+        private float _timeSinceLastAttack;
         private IDisposable _effectTimer;
+        private readonly Collider[] _colliderBuffer = new Collider[MAX_TARGETS];
 
         protected override void OnInitialize()
         {
             _attackRange = Config.Radius;
             _attackDamage = (int)Config.Damage;
             _attackCooldown = Config.Cooldown;
-            _lastAttackTime = -_attackCooldown;
+            _timeSinceLastAttack = 0f;
 
             _attackEffect.transform.localScale = Vector3.one * _attackRange;
+            
+            StartUpdate();
+        }
 
-            _attackSubscription?.Dispose();
-            _attackSubscription = Observable.EveryUpdate()
-                .Where(_ => Time.time - _lastAttackTime >= _attackCooldown)
-                .Subscribe(_ => PerformAttack());
+        protected override void OnUpdate(float deltaTime)
+        {
+            _timeSinceLastAttack += deltaTime;
+            
+            if (_timeSinceLastAttack >= _attackCooldown)
+            {
+                PerformAttack();
+                _timeSinceLastAttack = 0f;
+            }
         }
 
         private void PerformAttack()
         {
             DamageTargets();
-            _lastAttackTime = Time.time;
 
             _effectTimer?.Dispose();
             _attackEffect.SetActive(true);
@@ -52,11 +61,16 @@ namespace GameResources.Scripts.AbilitySystem
 
         private void DamageTargets()
         {
-            Collider[] colliders = Physics.OverlapSphere(_playerTransform.position, _attackRange, _targetMask);
+            int hitCount = Physics.OverlapSphereNonAlloc(
+                _playerTransform.position, 
+                _attackRange, 
+                _colliderBuffer, 
+                _targetMask
+            );
             
-            foreach (Collider collider in colliders)
+            for (int i = 0; i < hitCount; i++)
             {
-                IDamageable damageable = collider.GetComponent<IDamageable>();
+                IDamageable damageable = _colliderBuffer[i].GetComponent<IDamageable>();
                 if (damageable != null)
                 {
                     damageable.TakeDamage(_attackDamage);
@@ -67,7 +81,6 @@ namespace GameResources.Scripts.AbilitySystem
         public override void Dispose()
         {
             base.Dispose();
-            _attackSubscription?.Dispose();
             _effectTimer?.Dispose();
         }
     }

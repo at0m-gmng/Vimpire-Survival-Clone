@@ -22,8 +22,6 @@ namespace GameResources.Scripts.Facades
         private IMemoryPool _pool;
         private Transform _targetPlayer;
 
-        private void Start() => _movementController = new EnemyMovementController(transform, _targetPlayer, _config);
-
         protected override void OnDestroy()
         {
             base.OnDestroy();
@@ -39,6 +37,9 @@ namespace GameResources.Scripts.Facades
             EntityType = enemySpawnData.EnemiesDescription.EntityType;
             _config = enemySpawnData.EnemiesDescription.EnemyConfig;
             _targetPlayer = enemySpawnData.TargetPlayer;
+            
+            _movementController = new EnemyMovementController(transform, _targetPlayer, _config);
+            
             _damageableComponent.Initialize(_config);
             _damageableComponent.EntityDamaged += OnEntityDamaged;
             _damageableComponent.EntityDestroyed += OnEntityDestroyed;
@@ -50,7 +51,12 @@ namespace GameResources.Scripts.Facades
             }
             
             _updateSubscription = Observable.EveryUpdate()
-                .Subscribe(_ => _movementController?.UpdateMovement());
+                .Subscribe(_ => UpdateMovement());
+        }
+
+        private void UpdateMovement()
+        {
+            _movementController?.UpdateMovement();
         }
 
         public void OnDespawned()
