@@ -3,6 +3,7 @@ namespace GameResources.Scripts.Facades
     using System;
     using AbilitySystem;
     using Factories;
+    using Data;
     using Data.Entities;
     using MovementSystem;
     using UniRx;
@@ -47,21 +48,24 @@ namespace GameResources.Scripts.Facades
             _rangeAttack.Initialize(abilityDescription);
             _abilities.Add(_rangeAttack);
 
-            _movementController = new ShootMovementController(new ShootMovementData
-            (
-                EntityTransform,
-                direction,
-                abilityDescription.AbilityConfig.Speed
-            ));
+            if (_entityType == EntityType.ProjectileAbility)
+            {
+                _movementController = new ShootMovementController(new ShootMovementData
+                (
+                    EntityTransform,
+                    direction,
+                    abilityDescription.AbilityConfig.Speed
+                ));
             
-            _updateSubscription = Observable.EveryUpdate()
-                .Subscribe(_ =>
-                {
-                    _movementController?.UpdateMovement();
-                });
-            
-            _lifetimeSubscription = Observable.Timer(TimeSpan.FromSeconds(DEFAULT_LIFETIME))
-                .Subscribe(_ => ReturnToPool());
+                _updateSubscription = Observable.EveryUpdate()
+                    .Subscribe(_ =>
+                    {
+                        _movementController?.UpdateMovement();
+                    });
+                
+                _lifetimeSubscription = Observable.Timer(TimeSpan.FromSeconds(DEFAULT_LIFETIME))
+                    .Subscribe(_ => ReturnToPool());
+            }
         }
 
         private void OnEntityDamaged() => ReturnToPool();
@@ -93,7 +97,9 @@ namespace GameResources.Scripts.Facades
                 _pool.Despawn(this);
             }
         }
-        
+
+        public void SetPosition(Vector3 position) => transform.position = position;
+
         #endregion
     }
 }

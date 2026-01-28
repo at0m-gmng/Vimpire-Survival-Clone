@@ -66,17 +66,17 @@
           "Cooldown": 0.5,
           "Radius": 50.0,
           "Speed": 10.0,
-          "EntitiesCount": 0
+          "EntitiesCount": 1
         }
       },
       {
         "EntityType": "OrbitAbility",
         "AbilityConfig": {
-          "Damage": 1.0,
-          "Cooldown": 1.0,
-          "Radius": 3.0,
-          "Speed": 0.0,
-          "EntitiesCount": 0
+          "Damage": 3.0,
+          "Cooldown": 5.0,
+          "Radius": 2.0,
+          "Speed": 100.0,
+          "EntitiesCount": 2
         }
       },
       {
