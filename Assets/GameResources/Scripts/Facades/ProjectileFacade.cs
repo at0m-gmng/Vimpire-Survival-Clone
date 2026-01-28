@@ -47,22 +47,16 @@ namespace GameResources.Scripts.Facades
             _rangeAttack.Initialize(abilityDescription);
             _abilities.Add(_rangeAttack);
 
-            _movementController = new BaseFollowingController(new FollowingData
+            _movementController = new ShootMovementController(new ShootMovementData
             (
                 EntityTransform,
-                _targetPlayer,
+                direction,
                 abilityDescription.AbilityConfig.Speed
             ));
             
             _updateSubscription = Observable.EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    if (_targetPlayer == null)
-                    {
-                        ReturnToPool();
-                        return;
-                    }
-                    
                     _movementController?.UpdateMovement();
                 });
             
