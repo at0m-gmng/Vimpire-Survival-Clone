@@ -1,4 +1,4 @@
-﻿namespace GameResources.Scripts.Facades
+namespace GameResources.Scripts.Facades
 {
     using System;
     using Data.Entities;
@@ -16,9 +16,6 @@
         private IMemoryPool _pool;
         private Transform _targetPlayer;
 
-        private void Start() => _movementController = new BaseFollowingController(
-            new FollowingData(EntityTransform, _targetPlayer, _config.CollectSpeed));
-
         protected override void OnDestroy()
         {
             base.OnDestroy();
@@ -34,6 +31,9 @@
             EntityType = spawnData.CollectableDescription.EntityType;
             _config = spawnData.CollectableDescription.CollectableConfig;
             _targetPlayer = spawnData.TargetPlayer;
+            
+            _movementController = new BaseFollowingController(
+                new FollowingData(EntityTransform, _targetPlayer, _config.CollectSpeed));
         }
 
         public void OnDespawned()
@@ -58,9 +58,11 @@
             if (_updateSubscription == null)
             {
                 _updateSubscription = Observable.EveryUpdate()
-                    .Subscribe(_ => _movementController?.UpdateMovement());
+                    .Subscribe(_ => UpdateMovement());
             }
         }
+
+        private void UpdateMovement() => _movementController?.UpdateMovement();
 
         public void Collect()
         {

@@ -1,7 +1,6 @@
 namespace GameResources.Scripts.AbilitySystem
 {
     using System.Collections.Generic;
-    using System.Linq;
     using HealthSystem;
     using UniRx;
     using UniRx.Triggers;
@@ -20,6 +19,8 @@ namespace GameResources.Scripts.AbilitySystem
         private readonly LayerMask _targetLayerMask;
         
         private readonly HashSet<Collider> _detectedEnemies = new();
+        private readonly Dictionary<Collider, IDamageable> _damageableCache = new();
+        private readonly List<Collider> _toRemove = new();
         private readonly CompositeDisposable _disposables = new();
         private float _currentDamage;
         private float _currentRadius;
@@ -48,6 +49,7 @@ namespace GameResources.Scripts.AbilitySystem
                                 if (damageable != null && damageable.Health > 0)
                                 {
                                     _detectedEnemies.Add(collider);
+                                    _damageableCache[collider] = damageable;
                                 }
                             }
                         }
@@ -58,6 +60,7 @@ namespace GameResources.Scripts.AbilitySystem
                     .Subscribe(collider =>
                     {
                         _detectedEnemies.Remove(collider);
+                        _damageableCache.Remove(collider);
                     })
                     .AddTo(_disposables);
 
@@ -79,11 +82,18 @@ namespace GameResources.Scripts.AbilitySystem
 
         private void DamageTargets()
         {
-            foreach (Collider collider in _detectedEnemies.ToList())
+            _toRemove.Clear();
+
+            foreach (Collider collider in _detectedEnemies)
             {
-                if (collider != null && collider.gameObject.activeInHierarchy)
+                if (collider == null || !collider.gameObject.activeInHierarchy)
                 {
-                    IDamageable damageable = collider.GetComponent<IDamageable>();
+                    _toRemove.Add(collider);
+                    continue;
+                }
+
+                if (_damageableCache.TryGetValue(collider, out IDamageable damageable))
+                {
                     if (damageable != null && damageable.Health > 0)
                     {
                         damageable.TakeDamage((int)_currentDamage);
@@ -91,22 +101,19 @@ namespace GameResources.Scripts.AbilitySystem
 
                     if (damageable == null || damageable.Health <= 0)
                     {
-                        _detectedEnemies.Remove(collider);
+                        _toRemove.Add(collider);
                     }
                 }
                 else
                 {
-                    _detectedEnemies.Remove(collider);
+                    _toRemove.Add(collider);
                 }
             }
 
-
-            foreach (Collider detectedEnemy in _detectedEnemies)
+            foreach (Collider collider in _toRemove)
             {
-                if (detectedEnemy == null)
-                {
-                    _detectedEnemies.Remove(detectedEnemy);
-                }
+                _detectedEnemies.Remove(collider);
+                _damageableCache.Remove(collider);
             }
         }
 
@@ -115,6 +122,8 @@ namespace GameResources.Scripts.AbilitySystem
             base.Dispose();
             _disposables.Dispose();
             _detectedEnemies.Clear();
+            _damageableCache.Clear();
+            _toRemove.Clear();
         }
     }
 }

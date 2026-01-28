@@ -58,15 +58,14 @@ namespace GameResources.Scripts.Facades
                 ));
             
                 _updateSubscription = Observable.EveryUpdate()
-                    .Subscribe(_ =>
-                    {
-                        _movementController?.UpdateMovement();
-                    });
+                    .Subscribe(_ => UpdateMovement());
                 
                 _lifetimeSubscription = Observable.Timer(TimeSpan.FromSeconds(DEFAULT_LIFETIME))
                     .Subscribe(_ => ReturnToPool());
             }
         }
+
+        private void UpdateMovement() => _movementController?.UpdateMovement();
 
         private void OnEntityDamaged() => ReturnToPool();
 

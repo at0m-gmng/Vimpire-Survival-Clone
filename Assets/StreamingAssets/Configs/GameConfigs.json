@@ -31,7 +31,7 @@
       {
         "EntityType": "CollectableSmallExperience",
         "CollectableConfig": {
-          "Experience": 10.0,
+          "Experience": 20.0,
           "CollectSpeed": 20.0
         }
       }

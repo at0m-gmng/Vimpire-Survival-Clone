@@ -19,7 +19,6 @@ namespace GameResources.Scripts.AbilitySystem
 
         protected void StartUpdate()
         {
-            _updateSubscription?.Dispose();
             if (_updateSubscription == null)
             {
                 _updateSubscription = Observable.EveryUpdate()
